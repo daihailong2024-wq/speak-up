@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffc629">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Speak Up">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Speak Up 英语口语</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, playful, confident — a coach who cheers every attempt
+   IDEA: a U.S. school-bus pass / classroom card: yellow band, bold ink, stickers for wins
+   PICTURE: the working practice card itself — big target sentence, big mic button
+   COLOUR+TYPE: school-bus yellow dominant, navy ink, coral accent; Baloo 2 titles + Nunito body
+   LAYOUT: one calm column ≤760px, sticky tabs, cards stack on phones */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#101828);--ink:light-dark(#14213d,#eef2ff);--muted:light-dark(#5b6478,#a6b0c8);
+--bus:#ffc629;--busink:#14213d;--coral:#ff5a4e;--ok:light-dark(#11865a,#4ade9a);
+--card:light-dark(#f5f7fb,#18223a);--line:light-dark(#e2e6ee,#2b3654);--soft:light-dark(#fff6d6,#2b2614)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Nunito,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Baloo 2",Nunito,"PingFang SC",sans-serif;line-height:1.1;margin:0;text-wrap:balance}
+button{font:inherit;color:inherit;cursor:pointer;border:0;border-radius:14px;min-height:44px;padding:8px 14px;background:var(--card)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+input{font:inherit;font-size:16px;min-height:48px;border:2px solid var(--line);border-radius:14px;padding:8px 14px;background:var(--bg);color:var(--ink);width:100%}
+.hero{background:var(--bus);color:var(--busink);padding:18px max(4vw,16px) 14px}
+.brand{display:flex;gap:12px;align-items:center;max-width:760px;margin:auto}
+.brand h1{font-size:clamp(30px,6vw,40px)}.brand p{margin:0;font-weight:700}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.kids,.stats{max-width:760px;margin:12px auto 0}
+.kids button{background:#fff8;color:var(--busink);font-weight:800}.kids button.on{background:var(--busink);color:#fff}
+.pill{background:#fff9;color:var(--busink);border-radius:99px;padding:4px 12px;font-weight:800;font-size:14px;white-space:nowrap}
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;padding:8px max(4vw,12px);background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{flex:none;font-weight:800;background:none}.tabs button.on{background:var(--busink);color:#fff}
+:root[data-theme=dark] .tabs button.on{background:var(--bus);color:var(--busink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .tabs button.on{background:var(--bus);color:var(--busink)}}
+main{max-width:760px;margin:auto;padding:18px max(4vw,16px) 80px}
+section+section{margin-top:26px}
+h2{font-size:clamp(28px,5vw,36px)}h3{font-size:22px;margin:22px 0 10px}
+.tag{display:inline-block;background:var(--coral);color:#fff;border-radius:99px;padding:2px 12px;font-weight:800;font-size:14px;margin-bottom:6px}
+.sub{color:var(--muted);margin:4px 0 0}
+.plan{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.plan button{width:100%;text-align:left;display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px}
+.plan .dot{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px}
+.plan .done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px}
+.wc{background:var(--card);border-radius:18px;padding:14px}
+.wc b{font-family:"Baloo 2";font-size:28px;line-height:1}.wc .zh{color:var(--muted);font-weight:700}
+.wc .ex{margin-top:8px;font-size:15px}
+.say{min-height:36px;min-width:44px;padding:4px 10px;background:var(--bus);color:var(--busink);font-weight:800;border-radius:99px;font-size:14px}
+.say.slow{background:transparent;border:2px solid var(--bus);color:inherit}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.list li{background:var(--card);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.list li span small{display:block;color:var(--muted)}
+.dlg li.y{background:var(--soft)}.who{font-weight:800;font-size:13px;color:var(--muted);display:block}
+.tone{color:var(--coral);font-weight:800}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:10px;margin-top:18px}
+.note{border:2px solid var(--line);border-radius:18px;padding:14px}.note h4{margin:0 0 6px;font-size:17px}
+.note p{margin:4px 0}.bad{text-decoration:line-through;color:var(--coral)}.good{color:var(--ok);font-weight:800}
+.big{background:var(--busink);color:#fff;font-weight:800;padding:12px 20px}
+:root[data-theme=dark] .big{background:var(--bus);color:var(--busink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .big{background:var(--bus);color:var(--busink)}}
+.ghost{background:none;border:2px solid var(--line);font-weight:700}
+.practice{background:var(--card);border-radius:24px;padding:clamp(16px,4vw,26px);text-align:center}
+.practice .target{font-family:"Baloo 2";font-size:clamp(26px,6vw,40px);line-height:1.15;margin:8px 0}
+.practice .zh{color:var(--muted);font-weight:700}
+.mic{width:84px;height:84px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:15px;margin:14px auto 8px;display:grid;place-items:center}
+.mic.on{animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 14px #ff5a4e33}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none;outline:4px solid var(--bus)}}
+.typebox{display:flex;gap:8px;margin-top:8px}.typebox button{flex:none}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
+.result{margin-top:14px;font-size:20px;line-height:1.6}.result .w{padding:0 2px;border-radius:6px}
+.result .y{color:var(--ok);font-weight:800}.result .n{color:var(--coral);text-decoration:underline wavy}
+.score{font-family:"Baloo 2";font-size:44px;line-height:1}
+.prog{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 14px}.prog i{display:block;height:100%;background:var(--bus)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px;margin-top:14px}
+.opts button{background:var(--bg);border:2px solid var(--line);font-weight:700;text-align:left}
+.opts .right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}.opts .wrong{border-color:var(--coral)}
+.chat{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.b{max-width:85%;padding:10px 14px;border-radius:18px;background:var(--card)}
+.b.me{align-self:flex-end;background:var(--bus);color:var(--busink)}
+.fix{align-self:flex-end;max-width:85%;border:2px dashed var(--coral);border-radius:16px;padding:8px 12px;font-size:15px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}.chips button{flex:none;font-size:14px;min-height:38px;border-radius:99px}
+.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center}
+.stat div{background:var(--card);border-radius:16px;padding:12px}.stat b{font-family:"Baloo 2";font-size:30px;display:block;line-height:1}
+.tips li{margin:6px 0}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--busink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;opacity:0;transition:.2s;pointer-events:none;z-index:9;max-width:90vw;text-align:center}
+#toast.show{opacity:1}
+textarea{width:100%;min-height:160px;font:14px/1.5 inherit;border-radius:12px;padding:10px;background:var(--bg);color:var(--ink);border:2px solid var(--line)}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="brand">
+    <svg width="54" height="48" viewBox="0 0 54 48" aria-hidden="true"><path d="M6 4h42a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H24l-12 10v-10H6a6 6 0 0 1-6-6V10a6 6 0 0 1 6-6z" fill="#14213d"/><circle cx="16" cy="20" r="3.5" fill="#ffc629"/><circle cx="27" cy="20" r="3.5" fill="#ffc629"/><circle cx="38" cy="20" r="3.5" fill="#ff5a4e"/></svg>
+    <div><h1>Speak Up!</h1><p>每天15分钟 · 敢开口 · 说地道</p></div>
+  </div>
+  <div class="kids row" id="kids"></div>
+  <div class="stats row" id="stats"></div>
+</header>
+<nav class="tabs" id="tabs">
+  <button data-tab="today">今日学习单</button><button data-tab="listen">听力</button><button data-tab="speak">跟读+勇敢说</button><button data-tab="chat">情景对话</button><button data-tab="parent">家长</button>
+</nav>
+<main id="view"></main>
+<div id="toast"></div>
+<script>
+{
+/* ---------- 课程内容：8个生活场景 × 两个级别（Level 1 = 四年级，Level 2 = 六年级） ---------- */
+const T=[
+{id:'school',zh:'在学校',en:'At School',role:['Ms. Lee, the child\'s friendly classroom teacher','Mr. Brown, the child\'s 6th grade teacher'],scene:'an elementary school classroom',
+ tip:['th 音','"thank you""three" 舌尖轻放上下牙之间吹气，不要说成 "sank you"。'],
+ gram:['He is my teacher. She is very nice. (指同一位女老师)','She is my teacher. She is very nice.','he / she 要分清：女老师用 she，男老师用 he。'],
+ talk:['Tell me about your teacher.','What is your favorite class, and why?'],
+ L1:{w:[['pencil','铅笔','Can I borrow a pencil?'],['bathroom','洗手间','May I go to the bathroom?'],['lunch','午饭','What\'s for lunch today?'],['teacher','老师','My teacher is nice.'],['help','帮助','Can you help me, please?']],
+  p:[['Excuse me.','打扰一下'],['I don\'t understand.','我不明白'],['Can you say that again?','能再说一遍吗？'],['I\'m done!','我做完了！']],
+  d:[['A','Good morning! How are you today?'],['Y','I\'m good, thank you.'],['A','Do you have your homework?'],['Y','Yes, here it is.'],['A','Great job! Please sit down.'],['Y','Excuse me, may I go to the bathroom?']],other:'Teacher'},
+ L2:{w:[['assignment','作业，任务','When is the assignment due?'],['recess','课间休息','We play soccer at recess.'],['explain','解释','Could you explain that again?'],['partner','搭档','Can I work with a partner?'],['due','到期，截止','The project is due on Friday.']],
+  p:[['Could you explain it in a different way?','能换个方式解释吗？'],['I\'m not sure, but I think...','我不确定，但我觉得…'],['What page are we on?','我们在第几页？'],['Can I work with a partner?','我可以和同伴一起做吗？']],
+  d:[['A','Okay class, open your books. Any questions?'],['Y','Excuse me, what page are we on?'],['A','Page forty-two. Do you understand the assignment?'],['Y','Not really. Could you explain it in a different way?'],['A','Sure. Write five sentences about your weekend.'],['Y','Got it. When is it due?'],['A','It\'s due on Friday.']],other:'Teacher'}},
+{id:'market',zh:'在超市',en:'At the Supermarket',role:['a friendly store worker','a friendly cashier'],scene:'a U.S. supermarket',
+ tip:['不发音的字母','aisle 读 /aɪl/（像 "I\'ll"），receipt 里的 p 不发音。'],
+ gram:['I want two apple.','I want two apples.','两个以上要加 -s，结尾 s 要读出来。'],
+ talk:['What do you like to buy at the store?','Tell me how you help your family when you go shopping.'],
+ L1:{w:[['cart','购物车','Let\'s get a cart.'],['milk','牛奶','We need some milk.'],['aisle','货架通道','The bread is in aisle five.'],['cheap','便宜','This one is cheap.'],['bag','袋子','Do you need a bag?']],
+  p:[['Where is the milk?','牛奶在哪里？'],['How much is this?','这个多少钱？'],['Yes, please.','好的，谢谢'],['No, thank you.','不用了，谢谢']],
+  d:[['A','Hi! Can I help you find something?'],['Y','Yes, please. Where is the milk?'],['A','It\'s in aisle seven, at the back.'],['Y','Thank you!'],['A','You\'re welcome. Have a nice day!'],['Y','You too!']],other:'Worker'},
+ L2:{w:[['coupon','优惠券','Mom has a coupon for cereal.'],['checkout','收银台','Let\'s go to the checkout.'],['receipt','收据','Can I have the receipt?'],['on sale','促销','Strawberries are on sale.'],['compare','比较','Let\'s compare the prices.']],
+  p:[['Is this on sale?','这个在打折吗？'],['Can I use this coupon?','可以用这张优惠券吗？'],['Can I pay with a card?','可以刷卡吗？'],['Did you find everything okay?','都找到了吗？（收银员常问）']],
+  d:[['A','Hi there! Did you find everything okay?'],['Y','Yes, thanks. Are these strawberries on sale?'],['A','They are. Two boxes for five dollars.'],['Y','Great, I\'ll take two. Can I use this coupon too?'],['A','Sure! Would you like your receipt?'],['Y','Yes, please. Thank you!']],other:'Cashier'}},
+{id:'food',zh:'在餐厅',en:'At a Restaurant',role:['a friendly waiter','a friendly waiter'],scene:'a family restaurant',
+ tip:['词尾辅音','check、burger、fries 的结尾音要轻轻读出来，不要吞掉，也不要加"呃"。'],
+ gram:['I want a burger.','I would like a burger, please.','点餐用 I would like / Can I have... 更礼貌。'],
+ talk:['What is your favorite food?','Tell me about the best meal you ever had.'],
+ L1:{w:[['menu','菜单','Can I see the menu?'],['water','水','Can I have some water, please?'],['hungry','饿','I\'m so hungry!'],['spicy','辣','Is it spicy?'],['check','账单','Can we have the check, please?']],
+  p:[['I would like a cheeseburger.','我想要一个芝士汉堡'],['Can I have some water, please?','可以给我一些水吗？'],['It\'s yummy!','真好吃！'],['No ice, please.','请不要加冰']],
+  d:[['A','Hi! Are you ready to order?'],['Y','Yes. I would like a cheeseburger, please.'],['A','Fries or salad on the side?'],['Y','Fries, please.'],['A','Anything to drink?'],['Y','Can I have some water, please?']],other:'Waiter'},
+ L2:{w:[['order','点餐','I\'m ready to order.'],['recommend','推荐','What do you recommend?'],['allergic','过敏的','I\'m allergic to peanuts.'],['refill','续杯','Can I get a refill?'],['to-go box','打包盒','Can I get a to-go box?']],
+  p:[['What do you recommend?','你推荐什么？'],['Does this have nuts in it?','这个有坚果吗？'],['Can I get a refill, please?','可以续杯吗？'],['Can I get a to-go box?','能给我个打包盒吗？']],
+  d:[['A','Welcome! Have you decided yet?'],['Y','Almost. What do you recommend?'],['A','The chicken pasta is really popular.'],['Y','Does it have nuts in it? I\'m allergic to peanuts.'],['A','No nuts at all. It\'s safe.'],['Y','Perfect, I\'ll have that. Could I also get a lemonade?']],other:'Waiter'}},
+{id:'mall',zh:'在商场',en:'At the Mall',role:['a friendly salesperson in a shoe store','a friendly salesperson in a clothing store'],scene:'a shopping mall',
+ tip:['v 和 w','very、over：上牙咬下唇；wear、want：嘴唇圆起来。不要把 very 说成 "wery"。'],
+ gram:['It is very big for me.','It is too big for me.','"太大不合适"用 too，不用 very。'],
+ talk:['What do you like to wear?','Tell me about something you really want to buy.'],
+ L1:{w:[['shoes','鞋子','I need new shoes.'],['size','尺码','What size are you?'],['try on','试穿','Can I try it on?'],['color','颜色','I like this color.'],['price','价格','What is the price?']],
+  p:[['Can I try this on?','我能试穿吗？'],['It\'s too small.','太小了'],['Just looking, thanks.','我只是看看，谢谢'],['Where is the fitting room?','试衣间在哪？']],
+  d:[['A','Hi! Can I help you?'],['Y','Just looking, thanks.'],['A','Okay! Let me know if you need anything.'],['Y','Excuse me, can I try these shoes on?'],['A','Sure! What size?'],['Y','Size four, please.']],other:'Salesperson'},
+ L2:{w:[['fitting room','试衣间','The fitting room is over there.'],['exchange','换货','Can I exchange this shirt?'],['discount','折扣','Is there a student discount?'],['brand','品牌','What brand is this?'],['afford','买得起','I can\'t afford it right now.']],
+  p:[['Do you have this in a different color?','这个有别的颜色吗？'],['Could I exchange this for a smaller size?','能换小一号吗？'],['Is there a discount on this?','这个有折扣吗？'],['I\'ll think about it.','我再想想']],
+  d:[['A','Hi, welcome! Looking for anything special?'],['Y','Yes. Do you have this hoodie in a different color?'],['A','We have it in blue and gray.'],['Y','Could I try the gray one in a medium?'],['A','Of course. The fitting room is over there.'],['Y','Thanks! Is there a discount on hoodies today?'],['A','Yes, everything on this wall is twenty percent off.']],other:'Salesperson'}},
+{id:'friends',zh:'交朋友',en:'Making Friends',role:['Maya, a friendly kid at recess','Maya, a friendly classmate'],scene:'the school playground at recess',
+ tip:['r 和 l','ready：舌头卷起不碰上颚；play、lunch：舌尖顶住上牙后面。'],
+ gram:['We play tag now.','We are playing tag right now.','"正在做"用 am/is/are + -ing。'],
+ talk:['Tell me about your best friend.','What do you and your friends like to do together?'],
+ L1:{w:[['friend','朋友','You are my friend.'],['play','玩','Do you want to play?'],['turn','轮到','It\'s my turn!'],['share','分享','Let\'s share the ball.'],['join','加入','Can I join you?']],
+  p:[['Can I play with you?','我能和你一起玩吗？'],['What\'s your name?','你叫什么名字？'],['Your turn!','轮到你了！'],['That\'s so cool!','太酷了！']],
+  d:[['A','Hi! I\'m Maya. What\'s your name?'],['Y','Hi! My name is {name}. Can I play with you?'],['A','Sure! We\'re playing tag. You\'re it!'],['Y','Okay! Ready, set, go!'],['A','Ha ha, you can\'t catch me!'],['Y','That\'s so fun! Can we play again tomorrow?']],other:'Maya'},
+ L2:{w:[['hang out','一起玩','Want to hang out after school?'],['invite','邀请','I want to invite you to my party.'],['favorite','最喜欢的','What\'s your favorite game?'],['awesome','超棒的','That\'s awesome!'],['plan','计划','What are your plans this weekend?']],
+  p:[['Want to hang out at recess?','课间一起玩吗？'],['What are you into?','你喜欢什么？'],['No way! Me too!','不会吧！我也是！'],['Do you want to sit with me at lunch?','午饭想和我坐一起吗？']],
+  d:[['A','Hey, you\'re new, right? I\'m Maya.'],['Y','Yeah, I\'m {name}. Nice to meet you!'],['A','Nice to meet you too. What are you into?'],['Y','I\'m into drawing and building games. What about you?'],['A','No way! Me too!'],['Y','Awesome! Want to hang out at recess?'],['A','Sure! Let\'s meet by the swings.']],other:'Maya'}},
+{id:'library',zh:'在图书馆',en:'At the Library',role:['a friendly librarian','a friendly librarian'],scene:'a public library',
+ tip:['-ed 结尾','returned 读 /d/，checked 读 /t/，wanted 读 /ɪd/。过去式的尾巴一定要读出来。'],
+ gram:['Yesterday I return the book.','Yesterday I returned the book.','说过去的事，动词要变过去式。'],
+ talk:['What kind of books do you like?','Tell me about a book you read recently.'],
+ L1:{w:[['book','书','I like this book.'],['quiet','安静','Please be quiet.'],['borrow','借','Can I borrow this book?'],['card','借书卡','Here is my library card.'],['return','还','I want to return this book.']],
+  p:[['Where are the animal books?','动物书在哪里？'],['Can I borrow this?','我能借这本吗？'],['When is it due?','什么时候要还？'],['Thank you for your help.','谢谢你的帮助']],
+  d:[['A','Hi! What can I help you with?'],['Y','Can I borrow this book?'],['A','Sure. Do you have your library card?'],['Y','Yes, here it is.'],['A','Great. Please return it in two weeks.'],['Y','Okay, thank you!']],other:'Librarian'},
+ L2:{w:[['fiction','小说类（虚构）','I love reading fiction.'],['nonfiction','非虚构类','I need a nonfiction book for my report.'],['author','作者','Who is the author?'],['series','系列','This series has seven books.'],['renew','续借','Can I renew this book?']],
+  p:[['I\'m looking for the next book in this series.','我在找这个系列的下一本'],['Can I renew this book?','这本能续借吗？'],['Do you have any books by this author?','有这个作者的书吗？'],['Where is the nonfiction section?','非虚构区在哪？']],
+  d:[['A','Hi there! Looking for something?'],['Y','Yes. I\'m looking for the next book in this series.'],['A','It\'s checked out right now. Do you want to put it on hold?'],['Y','Sure. Can I also renew this book?'],['A','Done. It\'s due in three more weeks.'],['Y','Awesome, thank you so much!']],other:'Librarian'}},
+{id:'health',zh:'看医生/医务室',en:'At the Nurse\'s Office',role:['the kind school nurse','a kind doctor'],scene:'the school nurse\'s office or a doctor\'s office',
+ tip:['长短 i','sick 短促 /ɪ/，seek 拉长 /iː/。sick 不要读成 "seek"。'],
+ gram:['I head pain.','My head hurts. / I have a headache.','"哪里疼"用 My ___ hurts.'],
+ talk:['What do you do when you feel sick?','Tell me how you stay healthy.'],
+ L1:{w:[['hurt','疼，受伤','My knee hurts.'],['sick','生病','I feel sick.'],['headache','头疼','I have a headache.'],['nurse','护士','I need to see the nurse.'],['tired','累','I feel tired.']],
+  p:[['I don\'t feel good.','我不舒服'],['My stomach hurts.','我肚子疼'],['Can I call my mom?','我能给妈妈打电话吗？'],['I feel better now.','我现在好多了']],
+  d:[['A','Hi sweetie, what\'s wrong?'],['Y','I don\'t feel good. My stomach hurts.'],['A','I\'m sorry. When did it start?'],['Y','After lunch.'],['A','Let\'s check your temperature.'],['Y','Can I call my mom, please?']],other:'Nurse'},
+ L2:{w:[['fever','发烧','I think I have a fever.'],['sore throat','嗓子疼','I have a sore throat.'],['dizzy','头晕','I feel a little dizzy.'],['medicine','药','Take this medicine after dinner.'],['appointment','预约','I have a doctor\'s appointment today.']],
+  p:[['I\'ve had a headache since this morning.','我从早上开始头疼'],['I feel a little dizzy.','我有点头晕'],['Is it serious?','严重吗？'],['How often should I take this medicine?','这个药多久吃一次？']],
+  d:[['A','So, what brings you in today?'],['Y','I\'ve had a sore throat since Monday.'],['A','Do you have a fever?'],['Y','A little. And I feel dizzy sometimes.'],['A','Okay, let me take a look. Say ahh.'],['Y','Is it serious?'],['A','No, it\'s just a cold. Drink lots of water and rest.']],other:'Doctor'}},
+{id:'help',zh:'问路/求助',en:'Asking for Help',role:['a friendly adult at the park','a friendly front-desk worker at a community center'],scene:'a park or community center',
+ tip:['语调','一般疑问句（Can/Is/Do 开头）句尾上扬 ↗；特殊疑问句（Where/What 开头）句尾下降 ↘。'],
+ gram:['Where is bathroom?','Where is the bathroom?','具体地点前别忘了 the。'],
+ talk:['How do you get to school every day?','Tell me what you would do if you got lost.'],
+ L1:{w:[['lost','迷路','I am lost.'],['where','哪里','Where is the bathroom?'],['left','左边','Turn left here.'],['right','右边','It\'s on your right.'],['phone','电话','Can I use your phone?']],
+  p:[['Excuse me, can you help me?','打扰一下，能帮我吗？'],['I can\'t find my mom.','我找不到妈妈了'],['Where is the exit?','出口在哪？'],['Thank you very much!','非常感谢！']],
+  d:[['A','Hi there. Are you okay?'],['Y','Excuse me, can you help me? I can\'t find my mom.'],['A','Don\'t worry. What does she look like?'],['Y','She has a red jacket.'],['A','Let\'s go to the front desk together.'],['Y','Thank you very much!']],other:'Helper'},
+ L2:{w:[['directions','路线指引','Can you give me directions?'],['across from','在…对面','The gym is across from the library.'],['straight','直走','Go straight for two blocks.'],['corner','拐角','It\'s on the corner.'],['emergency','紧急情况','In an emergency, call 911.']],
+  p:[['Could you tell me how to get to the gym?','能告诉我去体育馆怎么走吗？'],['Is it far from here?','离这里远吗？'],['Sorry, could you say that more slowly?','能说慢一点吗？'],['So I go straight and turn left?','所以我直走再左转？']],
+  d:[['A','Hi! How can I help you?'],['Y','Could you tell me how to get to the gym?'],['A','Sure. Go straight down this hall and turn left at the corner.'],['Y','Sorry, could you say that more slowly?'],['A','No problem. Straight, then left at the corner.'],['Y','So I go straight and turn left? Is it far?'],['A','Not at all. It\'s across from the library.']],other:'Front desk'}},
+{id:'bus',zh:'坐校车/公交',en:'On the Bus',role:['Ben, a friendly kid on the school bus','a friendly city bus driver'],scene:'a school bus or city bus',
+ tip:['辅音连缀','stop、school、street：两个辅音之间不要加元音，不要读成 "si-top""si-kool"。'],
+ gram:['I go to school by the bus.','I take the bus to school. / I go to school by bus.','by + 交通工具，中间不加 the。'],
+ talk:['How do you get to school?','Tell me about your trip to school every morning.'],
+ L1:{w:[['bus','公交车，校车','I take the bus to school.'],['seat','座位','Is this seat open?'],['stop','车站','This is my stop.'],['driver','司机','Thank you, driver!'],['late','迟到，晚','Hurry, we\'re late!']],
+  p:[['Can I sit here?','我能坐这儿吗？'],['Is this seat taken?','这个座位有人吗？'],['This is my stop.','我到站了'],['See you tomorrow!','明天见！']],
+  d:[['A','Hi! Do you ride this bus every day?'],['Y','Yes, I do. Can I sit here?'],['A','Sure! Which stop is yours?'],['Y','Oak Street. It\'s the third stop.'],['A','Cool. Mine is after yours.'],['Y','Okay. See you tomorrow!']],other:'Ben'},
+ L2:{w:[['schedule','时刻表','Let\'s check the bus schedule.'],['transfer','换乘','We need to transfer at Main Street.'],['fare','车费','How much is the fare?'],['crowded','拥挤的','The bus is really crowded today.'],['on time','准时','Is the bus on time today?']],
+  p:[['Does this bus go to the library?','这趟车到图书馆吗？'],['How much is the fare?','车费多少？'],['Could you tell me when we get there?','到了能告诉我一声吗？'],['Excuse me, I need to get off here.','不好意思，我要在这下车']],
+  d:[['A','Good morning! Where are you headed?'],['Y','Does this bus go to the public library?'],['A','It does. The fare is one dollar for students.'],['Y','Great. Could you tell me when we get there?'],['A','Sure. It\'s about ten minutes away.'],['Y','Thank you. Is the bus usually on time?'],['A','Most days, yes. Have a seat!']],other:'Driver'}},
+{id:'party',zh:'生日派对',en:'Birthday Party',role:['Emma, a kid whose birthday party it is','Emma, a classmate hosting her birthday party'],scene:'a friend\'s birthday party at home',
+ tip:['单词重音','HAPpy BIRTHday；名词 PREsent（礼物）重音在前。重音读对，英语才自然。'],
+ gram:['Thank you for invite me.','Thank you for inviting me.','for 后面的动词要加 -ing。'],
+ talk:['How do you celebrate your birthday?','Tell me about the best party you ever went to.'],
+ L1:{w:[['birthday','生日','Happy birthday!'],['cake','蛋糕','This cake is yummy!'],['gift','礼物','This gift is for you.'],['party','派对','Thank you for the party!'],['candle','蜡烛','Blow out the candles!']],
+  p:[['Happy birthday!','生日快乐！'],['This is for you.','这是送你的'],['Make a wish!','许个愿吧！'],['Thanks for inviting me!','谢谢你邀请我！']],
+  d:[['A','Hi! You came! Thanks for coming!'],['Y','Happy birthday, Emma! This is for you.'],['A','Wow, thank you! Can I open it?'],['Y','Sure! I hope you like it.'],['A','I love it! Let\'s eat some cake.'],['Y','Yummy! Make a wish!']],other:'Emma'},
+ L2:{w:[['celebrate','庆祝','How do you celebrate your birthday?'],['guest','客人','There are ten guests at the party.'],['wrap','包装','I wrapped the gift myself.'],['decorate','装饰','We decorated the room with balloons.'],['RSVP','回复是否出席','Mom needs to RSVP by Friday.']],
+  p:[['Thanks for inviting me!','谢谢邀请！'],['I hope you like it.','希望你喜欢'],['Did you decorate all this yourself?','这些都是你自己布置的吗？'],['What time should my mom pick me up?','我妈妈几点来接我合适？']],
+  d:[['A','Hey, you made it! Come on in.'],['Y','Thanks for inviting me! Happy birthday!'],['A','Thank you! Wow, did you wrap this yourself?'],['Y','Yeah, I did. I hope you like it.'],['A','I\'m sure I will. We\'re about to play a game. Want to join?'],['Y','Totally! What are we playing?'],['A','A drawing game. You can be on my team.']],other:'Emma'}},
+{id:'phone',zh:'打电话',en:'On the Phone',role:['Ben\'s mom, answering the phone at home','Ben\'s dad, answering the phone at home'],scene:'a phone call to a friend\'s house',
+ tip:['数字重音','thirTEEN（13）重音在后，THIRty（30）重音在前。打电话报数字最容易听错。'],
+ gram:['I am Alex. （电话里）','Hi, this is Alex.','电话里说"我是…"用 This is…'],
+ talk:['Who do you like to call or video chat with?','Tell me how you would invite a friend over on the phone.'],
+ L1:{w:[['call','打电话','Can I call you later?'],['speak','讲话','Can I speak to Ben, please?'],['number','号码','What\'s your phone number?'],['hold on','稍等','Hold on, please.'],['later','稍后','Talk to you later!']],
+  p:[['Hi, this is Alex.','你好，我是 Alex'],['Can I speak to Ben, please?','我能和 Ben 说话吗？'],['Sorry, can you say that again?','抱歉，能再说一遍吗？'],['Talk to you later!','回头聊！']],
+  d:[['A','Hello?'],['Y','Hi, this is {name}. Can I speak to Ben, please?'],['A','Hi {name}! Sorry, Ben is in the shower. Can he call you back?'],['Y','Okay. My number is five five five, one two three four.'],['A','Got it. He\'ll call you later.'],['Y','Thank you! Bye!']],other:'Ben\'s mom'},
+ L2:{w:[['message','留言','Can I leave a message?'],['call back','回电话','Could you call me back?'],['available','有空的','Are you available on Saturday?'],['confirm','确认','I\'m calling to confirm the time.'],['connection','信号，连接','Sorry, the connection is bad.']],
+  p:[['Can I leave a message?','我能留个言吗？'],['I\'m calling to ask about our project.','我打电话是想问我们的作业项目'],['Sorry, you\'re breaking up.','抱歉，你的信号断断续续'],['Could you ask him to call me back?','能让他给我回个电话吗？']],
+  d:[['A','Hello, this is the Miller family.'],['Y','Hi, this is {name}, Ben\'s friend. Is Ben available?'],['A','Sorry, he\'s at soccer practice right now.'],['Y','Oh, okay. Can I leave a message?'],['A','Of course. Go ahead.'],['Y','I\'m calling to confirm our project meeting on Saturday at ten.'],['A','Got it. I\'ll have him call you back tonight.'],['Y','Thank you so much. Have a good evening!']],other:'Ben\'s dad'}},
+{id:'sports',zh:'体育课/运动',en:'PE and Sports',role:['Coach Davis, a friendly PE teacher','Coach Davis, the school basketball coach'],scene:'PE class or after-school sports',
+ tip:['连读','"pass it" 读成 "pa-sit"，"come on" 读成 "co-mon"：辅音结尾 + 元音开头要连起来。'],
+ gram:['I very like soccer.','I really like soccer. / I like soccer very much.','very 不能直接放在 like 前面。'],
+ talk:['What sport do you like? Why?','Tell me about a time you played on a team.'],
+ L1:{w:[['run','跑','Let\'s run fast!'],['catch','接住','Catch the ball!'],['throw','扔','Throw it to me!'],['team','队','We are on the same team.'],['win','赢','I want to win!']],
+  p:[['Pass it to me!','传给我！'],['I\'m open!','我这边没人防！'],['Good job!','干得好！'],['Can I be on your team?','我能加入你们队吗？']],
+  d:[['A','Okay everyone, line up! Today we play soccer.'],['Y','Yay! Can I be on the blue team?'],['A','Sure. Remember, no hands!'],['Y','Okay. Pass it to me! I\'m open!'],['A','Nice kick!'],['Y','Thank you, Coach!']],other:'Coach'},
+ L2:{w:[['practice','训练','We have practice after school.'],['score','比分，得分','What\'s the score?'],['tie','平局','The game ended in a tie.'],['referee','裁判','The referee called a foul.'],['tryout','选拔','Basketball tryouts are on Monday.']],
+  p:[['What\'s the score?','比分多少？'],['That was close!','差一点！'],['Nice try, we\'ll get them next time.','不错，下次赢回来'],['Can you show me how to do that?','你能教我怎么做吗？']],
+  d:[['A','Hey, are you coming to basketball tryouts on Monday?'],['Y','I want to, but I\'m not very good at shooting.'],['A','That\'s okay. Tryouts are about effort, too.'],['Y','Could you show me how to shoot a free throw?'],['A','Sure. Bend your knees and follow through.'],['Y','Like this? That was close!'],['A','Much better! Keep practicing and you\'ll do great.']],other:'Coach'}}
+];
+const TIPS=['听力提速：先用「正常」语速听懂，再切到「母语快」，坚持一周耳朵就能跟上同学说话的速度。','影子跟读：播放一句，马上跟着说，模仿语调和连读——这是最快提高口语流利度的方法。','每天固定时间 15–20 分钟，比周末一次学2小时更有效。','先夸再改：每次只纠正 1–2 个最重要的错误，敢说比说对更重要。','家里设"英语时间"：晚饭时全家说 5 分钟英语，用当天的 5 个词。','让孩子当小老师，把今天的单词和对话教给爸妈——教别人是最好的复习。','睡前听 10 分钟英文有声书或动画（英文字幕），培养语感和语调。','鼓励孩子在学校每天主动用一句新学的话，回家分享"今天我说了什么"。','跟读时模仿语调和停顿，而不只是单词，这是接近母语者的关键。','升级标准：跟读平均 80 分以上、情景对话能连续聊 6 轮不需要提示，就可以试 Level 2。'];
+
+/* ---------- 存储 ---------- */
+const KEY='speakup.v1';
+const def={cur:0,kids:[{name:'四年级',en:'Alex',lvl:1,grade:4,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}},{name:'六年级',en:'Sam',lvl:2,grade:6,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}}]};
+let S;try{S=JSON.parse(localStorage.getItem(KEY))||def}catch(e){S=def}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const kid=()=>S.kids[S.cur];
+const topic=()=>T[kid().day%T.length];
+const lesson=()=>{const k=kid(),L=topic()['L'+k.lvl];return k.custom[k.day]?{...L,w:k.custom[k.day]}:L};
+const prevWords=n=>{const k=kid(),all=[];for(let d=0;d<k.day;d++){const L=T[d%T.length]['L'+k.lvl];(k.custom[d]||L.w).forEach(w=>{if(!all.some(x=>x[0]===w[0]))all.push(w)})}return shuffle(all).slice(0,n)};
+const fill=s=>s.replace(/\{name\}/g,kid().en||'Alex');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const today=()=>new Date().toLocaleDateString('en-CA');
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200)}
+function addPts(n,msg){kid().pts+=n;save();renderTop();toast(msg||('勇气值 +'+n))}
+function markDone(step){const k=kid();if(!k.done[step]){k.done[step]=1;save();renderTop()}}
+
+/* ---------- 语音 ---------- */
+let TTS=null,DIC=null,AI=null,listening=false,micCb=null,acc='';
+function enVoices(){try{return speechSynthesis.getVoices().filter(v=>/^en[-_]US/i.test(v.lang))}catch(e){return[]}}
+function stopAll(){try{TTS&&TTS.stop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+function sayLines(lines,slow){
+  stopAll();
+  if(TTS){TTS.speak(lines.map(([sp,t])=>({text:fill(t),voice:sp==='Y'?'rounded':'airy',rate:slow?0.75:(S.speed||1),language:'en'}))).catch(e=>{if(e&&e.code==='not_granted'){TTS=null;sayLines(lines,slow)}});return}
+  if(!window.speechSynthesis){toast('这个设备不能播放语音');return}
+  const vs=enVoices();
+  lines.forEach(([sp,t])=>{const u=new SpeechSynthesisUtterance(fill(t));u.lang='en-US';u.rate=slow?0.7:0.95*(S.speed||1);if(vs.length)u.voice=vs[sp==='Y'?Math.min(1,vs.length-1):0];speechSynthesis.speak(u)});
+}
+const say=(t,slow)=>sayLines([['A',t]],slow);
+function micBtn(){return DIC?'<button class="mic" data-mic>点我<br>开始说</button>':''}
+function startMic(onText,onDone){
+  if(!DIC)return;
+  if(listening){DIC.stop().catch(()=>{});return}
+  stopAll();acc='';micCb={onText,onDone};
+  DIC.start().catch(e=>{micCb=null;if(e&&e.code==='not_granted'){DIC=null;render()}toast('麦克风没打开，可以用键盘上的麦克风听写或打字')});
+}
+function setupDic(d){
+  DIC=d;
+  d.onPartial(({text})=>{micCb&&micCb.onText((acc+' '+text).trim())});
+  d.onFinal(({text})=>{acc=(acc+' '+text).trim();micCb&&micCb.onText(acc)});
+  d.onState(({state})=>{listening=state==='listening';document.querySelectorAll('[data-mic]').forEach(b=>{b.classList.toggle('on',listening);b.innerHTML=listening?'说完了<br>点我停':'点我<br>开始说'});if(state==='idle'&&micCb){const c=micCb;micCb=null;c.onDone(acc)}});
+  render();
+}
+function nativeDic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;
+  let r=null;const h={p:()=>{},f:()=>{},s:()=>{}};
+  return{start(){return new Promise((res,rej)=>{try{r=new SR();r.lang='en-US';r.interimResults=true;r.continuous=false;
+    r.onstart=()=>{h.s({state:'listening'});res()};
+    r.onresult=e=>{let fin='',part='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=t;else part+=t}if(fin)h.f({text:fin});else h.p({text:part})};
+    r.onerror=e=>{if(/not-allowed|service-not-allowed|audio-capture/.test(e.error))rej({code:'not_granted'})};
+    r.onend=()=>{r=null;h.s({state:'idle'})};r.start()}catch(e){rej({code:'not_granted'})}})},
+   stop(){try{r&&r.stop()}catch(e){}return Promise.resolve()},onPartial(f){h.p=f},onFinal(f){h.f=f},onState(f){h.s=f}};
+}
+setTimeout(()=>{
+  if(window.claude&&claude.use){
+    claude.use('tts').then(t=>{TTS=t}).catch(()=>{});
+    claude.use('dictation').then(d=>{const x=d||nativeDic();if(x)setupDic(x)}).catch(()=>{});
+    claude.use('sample').then(s=>{AI=s;render()}).catch(()=>{});
+  }else{const x=nativeDic();if(x)setupDic(x)}
+},0);
+async function askAI(prompt){try{return await AI.json(prompt,{modelTier:'quick',cache:false})}catch(e){if(e&&e.code==='not_granted'){AI=null;render()}toast(e&&e.code==='rate_limited'?'AI老师有点忙，稍等再试':'AI老师暂时没回应');return null}}
+
+/* ---------- 打分 ---------- */
+const norm=s=>s.toLowerCase().replace(/[’]/g,"'").replace(/[^a-z0-9' ]/g,' ').split(/\s+/).filter(Boolean);
+function grade(target,said){
+  const a=norm(target),b=norm(said),n=a.length,m=b.length,dp=Array.from({length:n+1},()=>Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  const ok=Array(n).fill(false);let i=0,j=0;while(i<n&&j<m){if(a[i]===b[j]){ok[i]=true;i++;j++}else if(dp[i+1][j]>=dp[i][j+1])i++;else j++}
+  return{words:a,ok,pct:n?Math.round(ok.filter(Boolean).length/n*100):0};
+}
+const tone=s=>/\?$/.test(s)?(/^(what|where|when|who|why|how|which)\b/i.test(s.replace(/^(sorry|excuse me|okay|so|yes|no|sure)[,.!]?\s*/i,''))?' <span class="tone" title="句尾下降">↘</span>':' <span class="tone" title="句尾上扬">↗</span>'):'';
+const speedBar=()=>`<p class="row" style="gap:6px"><b style="font-size:14px">播放语速</b>${[[0.8,'慢一点'],[1,'正常'],[1.2,'母语快']].map(([v,l])=>`<button class="say ${(S.speed||1)===v?'':'slow'}" data-speed="${v}">${l}</button>`).join('')}</p>`;
+const sayBtns=(t,who)=>`<span class="row" style="flex:none;gap:4px"><button class="say" data-say="${esc(t)}" ${who?`data-who="${who}"`:''} aria-label="播放">▶</button><button class="say slow" data-say="${esc(t)}" data-slow="1" aria-label="慢速">慢</button></span>`;
+
+/* ---------- 顶部 ---------- */
+let tab='today';
+function renderTop(){
+  document.getElementById('kids').innerHTML=S.kids.map((k,i)=>`<button class="${i===S.cur?'on':''}" data-kid="${i}">${esc(k.name)} · Level ${k.lvl}</button>`).join('');
+  const k=kid(),n=Object.keys(k.done).length;
+  document.getElementById('stats').innerHTML=`<span class="pill">第 ${k.day+1} 天</span><span class="pill">连续 ${k.streak} 天</span><span class="pill">勇气值 ${k.pts}</span><span class="pill">今日 ${n}/5</span>`;
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+}
+const STEPS=[['words','学5个单词','today'],['listen','听力小测','listen'],['speak','跟读打分','speak'],['chat','情景对话','chat'],['brave','勇敢说30秒','speak']];
+
+/* ---------- 今日学习单 ---------- */
+function vToday(){
+  const k=kid(),t=topic(),L=lesson(),round=Math.floor(k.day/T.length);
+  return `<section><span class="tag">Day ${k.day+1}${round?` · 第${round+1}轮`:''}</span><h2>${esc(t.en)} · ${t.zh}</h2>
+  <p class="sub">今天的任务：按顺序完成，约 15–20 分钟。每一次开口都算勇气值！</p>
+  <ul class="plan">${STEPS.map(([id,zh,go])=>`<li class="${k.done[id]?'done':''}"><button data-go="${go}"><span class="dot">${k.done[id]?'✓':''}</span>${zh}</button></li>`).join('')}</ul></section>
+  <section><h3>今日 5 个单词</h3>
+  ${round&&AI&&!k.custom[k.day]?'<p class="hint">这个场景学过一轮了。<button class="ghost" id="newWords">让 AI 换 5 个新词</button></p>':''}
+  <div class="words">${L.w.map(([w,zh,ex])=>`<div class="wc"><div class="row" style="justify-content:space-between"><b>${esc(w)}</b>${sayBtns(w)}</div><div class="zh">${esc(zh)}</div><div class="ex row" style="justify-content:space-between"><span>${esc(ex)}</span>${sayBtns(ex)}</div></div>`).join('')}</div>
+  <p style="margin-top:12px"><button class="big" id="wordsDone">${k.done.words?'已学完 ✓':'这5个词我都会读了'}</button></p></section>
+  <section><h3>关键句</h3><ul class="list">${L.p.map(([e,z])=>`<li><span>${esc(e)}${tone(e)}<small>${esc(z)}</small></span>${sayBtns(e)}</li>`).join('')}</ul></section>
+  <section><h3>今日对话</h3><p class="hint">黄色是你要说的话。↗ 句尾上扬，↘ 句尾下降。</p>
+  ${speedBar()}<p class="row"><button class="ghost" id="playDlg">▶ 播放整段对话</button><button class="ghost" id="playDlgSlow">慢速播放</button></p>
+  <ul class="list dlg">${L.d.map(([sp,s])=>`<li class="${sp==='Y'?'y':''}"><span><span class="who">${sp==='Y'?'You 你':esc(L.other)}</span>${esc(fill(s))}${tone(s)}</span>${sayBtns(fill(s),sp)}</li>`).join('')}</ul></section>
+  <div class="two"><div class="note"><h4>发音小贴士 · ${esc(t.tip[0])}</h4><p>${esc(t.tip[1])}</p></div>
+  <div class="note"><h4>病句纠正</h4><p class="bad">${esc(t.gram[0])}</p><p class="good">${esc(t.gram[1])}</p><p>${esc(t.gram[2])}</p></div></div>
+  <section class="row"><button class="ghost" id="copySheet">复制今日学习单</button><button class="big" id="finishDay">完成今天，明天学新内容 →</button></section>
+  <textarea id="sheetBox" class="hide" readonly></textarea>`;
+}
+function sheetText(){
+  const k=kid(),t=topic(),L=lesson();
+  return `Speak Up 每日学习单 — ${k.name}（Level ${k.lvl}）第 ${k.day+1} 天\n场景：${t.en} ${t.zh}\n\n【5个单词】\n${L.w.map(([w,z,e],i)=>`${i+1}. ${w} — ${z}\n   例句：${e}`).join('\n')}\n\n【关键句】\n${L.p.map(([e,z])=>`• ${e}（${z}）`).join('\n')}\n\n【对话】\n${L.d.map(([s,x])=>`${s==='Y'?'You':L.other}: ${fill(x)}`).join('\n')}\n\n【发音】${t.tip[0]}：${t.tip[1]}\n【病句】✗ ${t.gram[0]}\n        ✓ ${t.gram[1]}（${t.gram[2]}）\n【勇敢说30秒】${t.talk[k.lvl-1]}`;
+}
+
+/* ---------- 听力 ---------- */
+let Q=null;
+function buildQuiz(){
+  const k=kid(),L=lesson(),pool=T.flatMap(t=>t['L'+k.lvl].w).filter(x=>!L.w.some(y=>y[0]===x[0]));
+  const qs=shuffle(L.w).slice(0,3).map(w=>({audio:w[0],ans:w[1],opts:shuffle([w[1],...shuffle(pool).slice(0,3).map(x=>x[1])]),kind:'听单词，选意思'}));
+  const sents=[...L.w.map(x=>x[2]),...L.p.map(x=>x[0]),...L.d.map(x=>fill(x[1]))];
+  shuffle(sents).slice(0,3).forEach(s=>qs.push({audio:s,ans:s,opts:shuffle([s,...shuffle(sents.filter(x=>x!==s)).slice(0,3)]),kind:'听句子，选你听到的'}));
+  shuffle(L.p).slice(0,2).forEach(p=>qs.push({audio:p[0],ans:p[0],dict:true,kind:'听写：听到什么就写什么'}));
+  prevWords(2).forEach(w=>qs.push({audio:w[0],ans:w[1],opts:shuffle([w[1],...shuffle(pool.filter(x=>x[1]!==w[1])).slice(0,3).map(x=>x[1])]),kind:'复习旧词：听单词，选意思'}));
+  Q={qs,i:0,right:0,picked:null,res:null};
+}
+function vListen(){
+  if(!Q)buildQuiz();
+  if(Q.i>=Q.qs.length){return `${speedBar()}<section class="practice"><span class="tag">听力完成</span><div class="score">${Q.right}/${Q.qs.length}</div><p>${Q.right>=Q.qs.length*0.7?'耳朵超灵！Great listening! 试试「母语快」语速':'多听几遍就会更好，Keep going!'}</p><button class="big" id="reQuiz">再来一组</button></section><section><h3>听故事</h3>${vStory()}</section>`}
+  const q=Q.qs[Q.i];
+  return `${speedBar()}<section class="practice"><span class="tag">${q.kind}</span><div class="prog"><i style="width:${Q.i/Q.qs.length*100}%"></i></div>
+  <p class="row" style="justify-content:center"><button class="big" data-say="${esc(q.audio)}">▶ 播放</button><button class="ghost" data-say="${esc(q.audio)}" data-slow="1">慢速</button></p>
+  ${q.dict?(Q.picked==null?`<div class="typebox"><input id="dictIn" placeholder="把听到的句子写下来" autocomplete="off" autocapitalize="off"><button class="big" id="dictGo">检查</button></div>`:`<div class="result"><div class="score">${Q.res.pct}</div>${Q.res.words.map((w,i)=>`<span class="w ${Q.res.ok[i]?'y':'n'}">${esc(w)}</span>`).join(' ')}</div>`)
+  :`<div class="opts">${q.opts.map((o,i)=>`<button data-opt="${i}" class="${Q.picked==null?'':o===q.ans?'right':Q.picked===i?'wrong':''}">${esc(o)}</button>`).join('')}</div>`}
+  ${Q.picked!=null?`<p>${/单词/.test(q.kind)?`<b>${esc(q.audio)}</b> = ${esc(q.ans)}`:''}</p><button class="big" id="nextQ">下一题 →</button>`:''}</section>
+  <section><h3>听故事</h3>${vStory()}</section>`;
+}
+
+let ST=null;
+function vStory(){
+  if(!AI)return `<p class="hint">听故事需要 AI 老师（在 Claude 里打开时可用）。先把今天的对话用「母语快」语速多听几遍，听懂后再看原文。</p><p class="row"><button class="ghost" id="playDlg2">▶ 盲听今日对话</button></p>`;
+  if(!ST)return `<p class="sub">AI 用今天的 5 个单词编一个短故事，先只听不看，再答 3 个问题。</p><button class="big" id="mkStory">生成今天的故事</button>`;
+  if(ST.loading)return '<p class="hint">AI 正在写故事…</p>';
+  return `<div class="practice" style="text-align:left"><b style="font-size:22px">${esc(ST.title)}</b>
+  <p class="row"><button class="big" data-say="${esc(ST.story)}">▶ 听故事</button><button class="ghost" data-say="${esc(ST.story)}" data-slow="1">慢速</button><button class="ghost" id="showStory">${ST.show?'隐藏原文':'看原文'}</button></p>
+  ${ST.show?`<p>${esc(ST.story)}</p>`:''}
+  ${ST.questions.map((q,qi)=>`<p style="margin-top:14px"><b>${qi+1}. ${esc(q.q)}</b> ${sayBtns(q.q)}</p><div class="opts">${q.options.map((o,oi)=>`<button data-sq="${qi}-${oi}" class="${ST.ans[qi]==null?'':oi===q.answer?'right':ST.ans[qi]===oi?'wrong':''}">${esc(o)}</button>`).join('')}</div>`).join('')}
+  <p class="row" style="margin-top:12px"><button class="ghost" id="mkStory">换一个故事</button></p></div>`;
+}
+async function makeStory(){
+  const k=kid(),L=lesson();ST={loading:true};render();
+  const j=await askAI(`Write a short story for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6) for listening practice. Scene: ${topic().en}. Use all of these words: ${L.w.map(w=>w[0]).join(', ')}. ${k.lvl===1?'5-6 very simple sentences, present tense mostly, max 10 words each.':'7-9 sentences of natural everyday English, max 15 words each.'} Kid-safe and fun. Then write 3 listening comprehension questions with 4 short options each. Return JSON only: {"title":"...","story":"...","questions":[{"q":"...","options":["","","",""],"answer":0}]}`);
+  ST=j&&j.story&&Array.isArray(j.questions)?{...j,show:false,ans:{}}:null;render();if(ST)say(ST.story);
+}
+
+/* ---------- 跟读 + 勇敢说 ---------- */
+let P={i:0,res:null,said:''},BR={said:'',fb:null};
+function items(){const L=lesson();if(!P.rev)P.rev=prevWords(3);return[...P.rev.map(w=>[w[0],'复习：'+w[1]]),...L.w.map(w=>[w[0],w[1]]),...L.w.map(w=>[w[2],w[0]+' 的例句']),...L.p,...L.d.map(d=>[fill(d[1]),d[0]==='Y'?'对话：你说的话':'对话：'+L.other+' 说的话（影子跟读）'])]}
+function vSpeak(){
+  const it=items(),cur=it[P.i%it.length],t=topic(),k=kid(),r=P.res;
+  return `<section class="practice"><span class="tag">跟读 ${P.i%it.length+1}/${it.length}</span><div class="prog"><i style="width:${(P.i%it.length)/it.length*100}%"></i></div>
+  <p class="row" style="justify-content:center">${sayBtns(cur[0])}</p>
+  <div class="target">${esc(cur[0])}${tone(cur[0])}</div><div class="zh">${esc(cur[1])}</div>
+  ${micBtn()}
+  <div class="typebox"><input id="said" placeholder="${DIC?'说的话会出现在这里':'点键盘上的麦克风说话，或打字'}" value="${esc(P.said)}" autocomplete="off"><button class="big" id="check">检查</button></div>
+  ${r?`<div class="result"><div class="score">${r.pct}</div>${r.words.map((w,i)=>`<span class="w ${r.ok[i]?'y':'n'}">${esc(w)}</span>`).join(' ')}<p style="font-size:16px">${r.pct>=90?'Awesome! 读得很棒！':r.pct>=60?'Good try! 红色的词再听一遍，再说一次。':'没关系！先点「慢」听一遍，再大声跟读。'}</p>
+  ${AI?'<button class="ghost" id="aiSpeak">请 AI 老师点评</button>':''}<div id="aiFb"></div>
+  <p class="row" style="justify-content:center"><button class="ghost" id="again">再说一次</button><button class="big" id="nextP">下一个 →</button></p></div>`:''}</section>
+  <section><h3>勇敢说 30 秒</h3><div class="practice" style="text-align:left">
+  <p class="row" style="justify-content:space-between"><b style="font-size:22px">${esc(t.talk[k.lvl-1])}</b>${sayBtns(t.talk[k.lvl-1])}</p>
+  <p class="hint">不用怕说错！尽量用上今天的单词：${lesson().w.map(w=>esc(w[0])).join('、')}。说得越多勇气值越高。</p>
+  <div style="text-align:center">${micBtn().replace('data-mic','data-mic data-brave')}</div>
+  <div class="typebox"><input id="brave" value="${esc(BR.said)}" placeholder="说或写几句话…" autocomplete="off"><button class="big" id="braveGo">提交</button></div>
+  <div id="braveFb">${BR.fb||''}</div></div></section>`;
+}
+function checkSay(){
+  const it=items(),cur=it[P.i%it.length];P.said=document.getElementById('said').value.trim();
+  if(!P.said){toast('先说一说或打几个字吧');return}
+  P.res=grade(cur[0],P.said);k_score(P.res.pct);addPts(P.res.pct>=80?2:1,P.res.pct>=80?'太棒了！勇气值 +2':'开口就有勇气值 +1');
+  if(P.i+1>=it.length)markDone('speak');render();
+}
+function k_score(p){const k=kid();k.scores.push(p);if(k.scores.length>60)k.scores.shift();save()}
+async function braveSubmit(){
+  BR.said=document.getElementById('brave').value.trim();if(!BR.said){toast('说几句话再提交吧');return}
+  const n=norm(BR.said).length,k=kid(),t=topic();markDone('brave');addPts(Math.min(5,1+Math.floor(n/8)),'勇敢说完成！勇气值 +'+Math.min(5,1+Math.floor(n/8)));
+  if(!AI){BR.fb=`<p>你说了 <b>${n}</b> 个词，真勇敢！明天试着多说一句。</p>`;render();return}
+  BR.fb='<p class="hint">AI 老师正在看…</p>';render();
+  const j=await askAI(`You are a warm English coach for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child answered the question "${t.talk[k.lvl-1]}". Their answer came from speech-to-text, so ignore spelling and punctuation:\n"""${BR.said}"""\nReturn JSON only: {"praise":"one short specific English praise","better":"the child's answer rewritten as a natural native speaker their age would say it, keeping their ideas, ${k.lvl===1?'simple words':'everyday words'}","fixes":[{"wrong":"short phrase they said","right":"corrected phrase","zh":"一句中文说明"}] (0-2 most important grammar or word-choice fixes only),"next":"one simple follow-up question to keep them talking"}`);
+  BR.fb=j?`<p class="good">${esc(j.praise||'')}</p>${(j.fixes||[]).map(f=>`<p><span class="bad">${esc(f.wrong)}</span> → <span class="good">${esc(f.right)}</span> <small>${esc(f.zh)}</small></p>`).join('')}<p><b>母语者会这样说：</b>${esc(j.better||'')} ${j.better?sayBtns(j.better):''}</p><p><b>接着聊：</b>${esc(j.next||'')}</p>`:'';
+  render();
+}
+
+/* ---------- 情景对话 ---------- */
+let C={log:[],busy:false,step:0,mode:null};
+function chatReset(){C={log:[],busy:false,step:0,mode:AI?'ai':'script',swap:false,hide:false}}
+function vChat(){
+  if(!C.mode)chatReset();
+  const t=topic(),L=lesson(),k=kid();
+  const mine=C.swap?'A':'Y',nextY=C.mode==='script'?L.d.slice(C.step).find(d=>d[0]===mine):null;
+  return `<section><span class="tag">${C.mode==='ai'?'AI 角色扮演':'跟着剧本练'}</span><h2>${esc(t.en)}</h2>
+  <p class="sub">你在${t.zh}，${C.swap&&C.mode==='script'?`这次你来演 ${esc(L.other)}。`:`和 ${esc(L.other)} 聊天。`}${C.mode==='ai'?'说错了没关系，AI 会温柔地告诉你更地道的说法。':''}</p>
+  <p class="row">${AI?`<button class="ghost" id="modeAI" ${C.mode==='ai'?'disabled':''}>自由聊（AI）</button><button class="ghost" id="modeScript" ${C.mode==='script'?'disabled':''}>跟着剧本练</button>`:''}${C.mode==='script'?`<button class="ghost" id="swapRole">${C.swap?'换回我自己的角色':'角色互换'}</button><button class="ghost" id="hideHint">${C.hide?'显示提示':'隐藏提示（挑战）'}</button>`:''}</p>
+  <div class="chat" id="chatLog">${C.log.map(m=>m.r==='me'?`<div class="b me">${esc(m.t)}</div>${m.fix?`<div class="fix">更地道：<b>${esc(m.fix.better)}</b> ${sayBtns(m.fix.better)}<br><small>${esc(m.fix.zh||'')}</small></div>`:''}${m.praise?`<div class="fix" style="border-style:solid;border-color:var(--ok)">${esc(m.praise)}</div>`:''}`:`<div class="b"><span class="row" style="justify-content:space-between;gap:6px"><span>${esc(m.t)}</span>${sayBtns(m.t)}</span></div>`).join('')}
+  ${C.busy?'<div class="b">…</div>':''}</div>
+  ${!C.started?`<button class="big" id="startChat">开始对话</button>`:C.mode==='script'&&!nextY?`<p class="good">对话完成！Great conversation!</p><button class="big" id="restartChat">再练一次</button>`:`
+  ${nextY?(C.hide?`<p class="hint">轮到你说了！不看提示，凭记忆说。</p>`:`<p class="hint">轮到你说：<b>${esc(fill(nextY[1]))}</b> ${sayBtns(fill(nextY[1]))}</p>`):''}
+  <div class="chips">${L.p.map(p=>`<button data-say="${esc(p[0])}">${esc(p[0])}</button>`).join('')}</div>
+  <div style="text-align:center">${micBtn().replace('data-mic','data-mic data-chat')}</div>
+  <div class="typebox"><input id="chatIn" placeholder="说或打字回复…" autocomplete="off"><button class="big" id="send">发送</button></div>
+  <p class="row" style="margin-top:10px"><button class="ghost" id="restartChat">重新开始</button></p>`}</section>`;
+}
+function chatPrompt(){
+  const k=kid(),t=topic(),L=lesson();
+  return `You are role-playing as ${t.role[k.lvl-1]} in ${t.scene} in the United States, talking with a Chinese-speaking child who lives in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child's name is ${k.en}.
+${k.lvl===1?'Use very simple words and short sentences (max 10 words each).':'Use simple, natural everyday English (sentences up to 15 words).'}
+Today's words: ${L.w.map(w=>w[0]).join(', ')}. Use them naturally and give the child chances to use them.
+Be warm, patient and encouraging. End every turn with exactly one easy question so the child keeps talking. Stay in character. Keep everything kid-safe.
+Look at the child's LAST message (it came from speech-to-text, so ignore spelling, capitals and punctuation). If it has a real grammar or word-choice mistake, or sounds unnatural, give a fix; otherwise fix is null.
+Conversation so far:
+${C.log.map(m=>(m.r==='me'?'Child: ':'You: ')+m.t).join('\n')||'(none yet — open the conversation in character)'}
+Respond with JSON only: {"reply":"your next line, 1-2 short sentences","fix":null or {"better":"natural corrected version of the child's last message","zh":"一句简短的中文解释"},"praise":"2-5 word English praise for the child's last message, or empty string if there is none yet"}`;
+}
+async function aiTurn(){
+  C.busy=true;render();const j=await askAI(chatPrompt());C.busy=false;
+  if(j){const me=[...C.log].reverse().find(m=>m.r==='me');if(me){me.fix=j.fix&&j.fix.better?j.fix:null;me.praise=j.praise||''}C.log.push({r:'ai',t:j.reply||'Okay!'});say(j.reply||'')}
+  render();scrollChat();
+}
+function scriptAdvance(){
+  const L=lesson();
+  const mine=C.swap?'A':'Y';while(C.step<L.d.length&&L.d[C.step][0]!==mine){const t=fill(L.d[C.step][1]);C.log.push({r:'ai',t});say(t);C.step++}
+  render();scrollChat();
+}
+function chatSend(){
+  const inp=document.getElementById('chatIn'),txt=inp.value.trim();if(!txt){toast('先说一句吧');return}
+  if(C.mode==='script'){const L=lesson(),tg=fill(L.d[C.step][1]),g=grade(tg,txt);C.log.push({r:'me',t:txt,praise:g.pct>=80?'Nice! '+g.pct+' 分':'',fix:g.pct<80?{better:tg,zh:'对照一下，再说一遍试试（'+g.pct+' 分）'}:null});C.step++;addPts(g.pct>=80?2:1)}
+  else{C.log.push({r:'me',t:txt});addPts(1)}
+  if(C.log.filter(m=>m.r==='me').length>=4)markDone('chat');
+  C.mode==='ai'?aiTurn():scriptAdvance();
+}
+function scrollChat(){const el=document.getElementById('chatLog');el&&el.lastElementChild&&el.lastElementChild.scrollIntoView({block:'nearest',behavior:'smooth'})}
+
+/* ---------- 家长 ---------- */
+function vParent(){
+  return `<section><h2>家长中心</h2><p class="sub">进度只保存在这台设备的浏览器里。</p>
+  ${S.kids.map((k,i)=>{const avg=k.scores.length?Math.round(k.scores.reduce((a,b)=>a+b,0)/k.scores.length):0;return `<h3>${esc(k.name)} · Level ${k.lvl}</h3>
+  <div class="stat"><div><b>${k.day}</b>完成天数</div><div><b>${k.pts}</b>勇气值</div><div><b>${avg||'–'}</b>跟读平均分</div></div>
+  <div class="typebox"><input data-name="${i}" value="${esc(k.name)}" aria-label="显示名"><input data-en="${i}" value="${esc(k.en)}" aria-label="英文名"></div>
+  <p class="row" style="margin-top:8px"><button class="ghost" data-lvl="${i}">切换到 Level ${k.lvl===1?2:1}</button><button class="ghost" data-back="${i}">回到上一天</button></p>`}).join('')}
+  </section><section><h3>给家长的建议</h3><ol class="tips">${TIPS.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>
+  <h3>华人孩子常见的发音难点</h3><ul class="tips"><li>th（think / this）、v/w、r/l、长短元音（ship / sheep）</li><li>词尾辅音被吞掉：dog、cat、checked</li><li>复数 -s、过去式 -ed 忘记加或不读出来</li><li>每个字一样重，没有重音和连读：要模仿 "Can I‿have‿it?" 的连读</li></ul>
+  <p class="hint">语音和 AI 功能：在电脑或安卓的 Chrome 中打开，可用麦克风说话、AI 老师和自然语音。iPhone 上可点键盘的麦克风听写来回答。</p></section>`;
+}
+
+/* ---------- 渲染与事件 ---------- */
+const V={today:vToday,listen:vListen,speak:vSpeak,chat:vChat,parent:vParent};
+function render(){renderTop();const a=document.activeElement&&document.activeElement.id;document.getElementById('view').innerHTML=V[tab]();if(a&&a!=='check'&&document.getElementById(a)&&a!=='send')try{document.getElementById(a).focus()}catch(e){}}
+function go(t){tab=t;stopAll();render();window.scrollTo({top:0})}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+  if(d.tab)return go(d.tab);
+  if(d.go)return go(d.go);
+  if(d.kid){S.cur=+d.kid;save();Q=null;P={i:0,res:null,said:''};BR={said:'',fb:null};C={log:[],busy:false,step:0,mode:null};ST=null;return render()}
+  if(d.say!=null)return d.who?sayLines([[d.who,d.say]],!!d.slow):say(d.say,!!d.slow);
+  if(d.mic!=null){
+    if(d.chat!=null)return startMic(t=>{const i=document.getElementById('chatIn');if(i)i.value=t},()=>{const i=document.getElementById('chatIn');if(i&&i.value.trim())chatSend()});
+    if(d.brave!=null)return startMic(t=>{const i=document.getElementById('brave');if(i)i.value=t},()=>{});
+    return startMic(t=>{const i=document.getElementById('said');if(i)i.value=t},()=>{if(document.getElementById('said').value.trim())checkSay()});
+  }
+  if(d.opt!=null&&Q.picked==null){Q.picked=+d.opt;const q=Q.qs[Q.i];if(q.opts[Q.picked]===q.ans){Q.right++;addPts(1,'答对了！+1')}else say(q.audio,true);return render()}
+  if(d.speed){S.speed=+d.speed;save();render();return say('This is the speed you will hear.')}
+  if(d.sq){const[qi,oi]=d.sq.split('-').map(Number);if(ST.ans[qi]==null){ST.ans[qi]=oi;if(oi===ST.questions[qi].answer)addPts(1,'听懂了！+1');if(Object.keys(ST.ans).length===ST.questions.length)markDone('listen');render()}return}
+  if(d.lvl!=null){const k=S.kids[+d.lvl];k.lvl=k.lvl===1?2:1;save();Q=null;return render()}
+  if(d.back!=null){const k=S.kids[+d.back];if(k.day>0)k.day--;k.done={};save();return render()}
+  const k=kid(),id=b.id;
+  if(id==='wordsDone'){markDone('words');addPts(1);return render()}
+  if(id==='playDlg'||id==='playDlgSlow')return sayLines(lesson().d,id==='playDlgSlow');
+  if(id==='copySheet'){const txt=sheetText();navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>toast('学习单已复制，可粘贴到备忘录或发给孩子')).catch(()=>{const box=document.getElementById('sheetBox');box.value=txt;box.classList.remove('hide');box.select()});if(!navigator.clipboard){const box=document.getElementById('sheetBox');box.value=txt;box.classList.remove('hide')}return}
+  if(id==='finishDay'){const n=Object.keys(k.done).length;const y=new Date(Date.now()-864e5).toLocaleDateString('en-CA');if(k.last!==today())k.streak=k.last===y?k.streak+1:1;k.last=today();k.day++;k.done={};save();Q=null;P={i:0,res:null,said:''};BR={said:'',fb:null};C={log:[],busy:false,step:0,mode:null};ST=null;toast(n>=5?'全部完成！明天见 Great job!':'明天继续加油！');return render()}
+  if(id==='newWords'){(async()=>{toast('AI 正在挑新词…');const t=topic(),used=T.flatMap(x=>x['L'+k.lvl].w.map(w=>w[0]));const j=await askAI(`Pick 5 useful everyday English words or short phrases a Chinese-speaking grade ${k.grade} child in the U.S. (English learner level ${k.lvl} of 6) needs for the scene "${t.en}". Avoid: ${used.join(', ')}. Return JSON only: [{"w":"word","zh":"中文意思","ex":"a short natural example sentence"}]`);if(Array.isArray(j)&&j.length){k.custom[k.day]=j.slice(0,5).map(x=>[x.w,x.zh,x.ex]);save();render()}})();return}
+  if(id==='mkStory')return makeStory();
+  if(id==='showStory'){ST.show=!ST.show;return render()}
+  if(id==='playDlg2')return sayLines(lesson().d,false);
+  if(id==='dictGo'){const v=document.getElementById('dictIn').value.trim();if(!v){toast('先写下你听到的');return}const q=Q.qs[Q.i];Q.res=grade(q.ans,v);Q.picked=0;if(Q.res.pct>=80){Q.right++;addPts(2,'听写很准！+2')}else addPts(1,'再听一遍对照看看 +1');return render()}
+  if(id==='reQuiz'){buildQuiz();return render()}
+  if(id==='nextQ'){Q.i++;Q.picked=null;Q.res=null;if(Q.i>=Q.qs.length)markDone('listen');render();if(Q.i<Q.qs.length)say(Q.qs[Q.i].audio);return}
+  if(id==='check')return checkSay();
+  if(id==='again'){P.res=null;P.said='';return render()}
+  if(id==='nextP'){P.i++;P.res=null;P.said='';render();say(items()[P.i%items().length][0]);return}
+  if(id==='aiSpeak'){(async()=>{const box=document.getElementById('aiFb');box.innerHTML='<p class="hint">AI 老师正在听…</p>';const cur=items()[P.i%items().length][0];const j=await askAI(`A Chinese-speaking child (grade ${k.grade}, English learner level ${k.lvl}) tried to read aloud: "${cur}". Speech-to-text heard: "${P.said}". Missing or changed words often mean a pronunciation problem. Return JSON only: {"zh":"给孩子的中文点评，先鼓励，再指出最多2个发音或语法问题，60字以内","focus":"the one English word or sound to practice, or empty"}`);const el=document.getElementById('aiFb');if(el&&j)el.innerHTML=`<p style="font-size:16px">${esc(j.zh||'')}</p>${j.focus?`<p>练习：<b>${esc(j.focus)}</b> ${sayBtns(j.focus)}</p>`:''}`})();return}
+  if(id==='braveGo')return braveSubmit();
+  if(id==='startChat'){C.log=[];C.step=0;C.started=true;return C.mode==='ai'?aiTurn():scriptAdvance()}
+  if(id==='restartChat'){const m=C.mode,sw=C.swap,hd=C.hide;chatReset();C.mode=m;C.swap=sw;C.hide=hd;return render()}
+  if(id==='swapRole'){const sw=!C.swap,hd=C.hide;chatReset();C.mode='script';C.swap=sw;C.hide=hd;return render()}
+  if(id==='hideHint'){C.hide=!C.hide;return render()}
+  if(id==='modeAI'||id==='modeScript'){chatReset();C.mode=id==='modeAI'?'ai':'script';return render()}
+  if(id==='send')return chatSend();
+});
+document.addEventListener('keydown',e=>{if(e.key!=='Enter')return;const id=e.target.id;if(id==='dictIn')document.getElementById('dictGo').click();if(id==='said')checkSay();if(id==='chatIn')chatSend();if(id==='brave')braveSubmit()});
+document.addEventListener('change',e=>{const d=e.target.dataset;if(d.name!=null){S.kids[+d.name].name=e.target.value.trim()||'孩子';save();renderTop()}if(d.en!=null){S.kids[+d.en].en=e.target.value.trim()||'Alex';save()}});
+try{speechSynthesis.onvoiceschanged=()=>{}}catch(e){}
+render();
+}
+</script>
+</body>
+</html>
