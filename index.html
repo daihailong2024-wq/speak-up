@@ -249,7 +249,7 @@ const T=[
   p:[['What\'s the score?','比分多少？'],['That was close!','差一点！'],['Nice try, we\'ll get them next time.','不错，下次赢回来'],['Can you show me how to do that?','你能教我怎么做吗？']],
   d:[['A','Hey, are you coming to basketball tryouts on Monday?'],['Y','I want to, but I\'m not very good at shooting.'],['A','That\'s okay. Tryouts are about effort, too.'],['Y','Could you show me how to shoot a free throw?'],['A','Sure. Bend your knees and follow through.'],['Y','Like this? That was close!'],['A','Much better! Keep practicing and you\'ll do great.']],other:'Coach'}}
 ];
-const TIPS=['听力提速：先用「正常」语速听懂，再切到「母语快」，坚持一周耳朵就能跟上同学说话的速度。','影子跟读：播放一句，马上跟着说，模仿语调和连读——这是最快提高口语流利度的方法。','每天固定时间 15–20 分钟，比周末一次学2小时更有效。','先夸再改：每次只纠正 1–2 个最重要的错误，敢说比说对更重要。','家里设"英语时间"：晚饭时全家说 5 分钟英语，用当天的 5 个词。','让孩子当小老师，把今天的单词和对话教给爸妈——教别人是最好的复习。','睡前听 10 分钟英文有声书或动画（英文字幕），培养语感和语调。','鼓励孩子在学校每天主动用一句新学的话，回家分享"今天我说了什么"。','跟读时模仿语调和停顿，而不只是单词，这是接近母语者的关键。','升级标准：跟读平均 80 分以上、情景对话能连续聊 6 轮不需要提示，就可以试 Level 2。'];
+const TIPS=['听力提速：先用「正常」语速听懂，再切到「母语快」，坚持一周耳朵就能跟上同学说话的速度。','影子跟读：播放一句，马上跟着说，模仿语调和连读——这是最快提高口语流利度的方法。','每天固定时间 15–20 分钟，比周末一次学2小时更有效。','先夸再改：每次只纠正 1–2 个最重要的错误，敢说比说对更重要。','家里设"英语时间"：晚饭时全家说 5 分钟英语，用当天的 5 个词。','让孩子当小老师，把今天的单词和对话教给爸妈——教别人是最好的复习。','睡前听 10 分钟英文有声书或动画（英文字幕），培养语感和语调。','鼓励孩子在学校每天主动用一句新学的话，回家分享"今天我说了什么"。','跟读时模仿语调和停顿，而不只是单词，这是接近母语者的关键。','升级标准：跟读平均 80 分以上、情景对话能连续聊 6 轮不需要提示，就可以在「家长」页升一级（共 3 级：L1 入门、L2 基础、L3 进阶）。'];
 
 /* ---------- 加料：美国生活小知识、地道口语、句型替换 ---------- */
 const E={
@@ -282,12 +282,69 @@ sports:'<circle cx="32" cy="32" r="30" fill="#ffcf33"/><circle cx="32" cy="32" r
 };
 const icon=(id,cls='ticon')=>`<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true"><g>${ICON[id]||''}</g><circle cx="32" cy="32" r="30" fill="none" stroke="#1b2440" stroke-width="3"/></svg>`;
 const ex=()=>E[topic().id];
-const patSents=()=>{const[pt,subs]=ex().pat[kid().lvl-1];return subs.map(s=>pt.replace('___',s))};
+const patSents=()=>{const[pt,subs]=patOf();return subs.map(s=>pt.replace('___',s))};
+
+/* ---------- Level 3：进阶（短语动词、表达观点、复杂句） ---------- */
+const L3={
+school:{other:'Teacher',talk:'Describe a lesson you learned at school this year and why it matters.',pat:['I think ___ because the text says so.',['the character was brave','the ending was surprising','the author wanted to teach us something']],
+ w:[['participate','参与','Everyone should participate in the discussion.'],['summarize','总结','Can you summarize the main idea?'],['figure out','弄明白','I can\'t figure out this math problem.'],['fall behind','落后','I don\'t want to fall behind in reading.'],['evidence','证据','Use evidence from the text to support your answer.']],
+ p:[['I see your point, but I disagree because...','我明白你的意思，但我不同意，因为…'],['Could I get an extension on this project?','这个作业能延期吗？'],['What I mean is...','我的意思是…'],['Can you give me an example?','能举个例子吗？']],
+ d:[['A','Today we\'re discussing the story. What was the main character\'s problem?'],['Y','I think she felt left out at her new school.'],['A','Interesting. What evidence from the text supports that?'],['Y','On page twelve, she eats lunch alone and doesn\'t talk to anyone.'],['A','Great point. Does anyone see it differently?'],['Y','I\'d like to add something. By the end, she figures out how to make friends.'],['A','Nice job connecting the beginning and the end.'],['Y','Thanks! Could I get a little extra time on the essay? I\'m falling behind.']]},
+market:{other:'Worker',talk:'Explain how your family decides what to buy at the grocery store.',pat:['Do you know when you\'ll get more ___ in stock?',['almond milk','strawberries','bread']],
+ w:[['grocery list','购物清单','Let\'s stick to the grocery list.'],['out of stock','缺货','Sorry, that item is out of stock.'],['organic','有机的','Organic apples cost more.'],['budget','预算','We have a budget of fifty dollars.'],['expire','过期','Check when the milk expires.']],
+ p:[['Do you know when you\'ll get more in stock?','你知道什么时候补货吗？'],['Which one is the better deal?','哪个更划算？'],['We\'re trying to stay on budget.','我们想控制在预算内'],['This one expires tomorrow. Do you have a fresher one?','这个明天过期，有新鲜点的吗？']],
+ d:[['A','Hi! Can I help you find anything?'],['Y','Yes, we\'re looking for almond milk, but the shelf is empty.'],['A','Sorry about that. It\'s out of stock right now.'],['Y','Do you know when you\'ll get more in?'],['A','Probably on Tuesday. Our truck comes twice a week.'],['Y','Okay. Is there anything similar we could try instead?'],['A','Oat milk is right next to it, and it\'s on sale today.'],['Y','Perfect, that fits our budget. Thanks for your help!']]},
+food:{other:'Waiter',talk:'Describe your favorite restaurant and convince me to go there.',pat:['Could I substitute the ___ for a side salad?',['fries','rice','mashed potatoes']],
+ w:[['appetizer','开胃菜','Let\'s share an appetizer.'],['portion','份量','The portions here are huge.'],['ingredient','原料','What ingredients are in this sauce?'],['substitute','替换','Can I substitute the fries for a salad?'],['split','分着吃','Do you want to split a dessert?']],
+ p:[['Could I substitute the fries for a side salad?','薯条能换成沙拉吗？'],['What\'s in the sauce?','酱汁里有什么？'],['I\'m stuffed. Could we get the rest to go?','我吃撑了，剩下的能打包吗？'],['Excuse me, I think there\'s a mistake on the bill.','不好意思，账单好像有错']],
+ d:[['A','Hi there! Can I start you off with an appetizer?'],['Y','We\'d like to share the mozzarella sticks, please.'],['A','Great choice. And for your main course?'],['Y','I\'ll have the grilled chicken, but could I substitute the fries for a side salad?'],['A','No problem. Any allergies I should know about?'],['Y','I\'m allergic to peanuts. What\'s in the sauce?'],['A','Just garlic, butter, and lemon. No nuts at all.'],['Y','Sounds great. Could we get the check when you have a chance?']]},
+mall:{other:'Salesperson',talk:'Tell me about something you bought that was not worth it, and what you learned.',pat:['Could you check if you have this in ___?',['a larger size','black','a different style']],
+ w:[['refund','退款','I\'d like a refund, please.'],['return policy','退货政策','What\'s your return policy?'],['clearance','清仓','Everything on that rack is on clearance.'],['in stock','有货','Is this size in stock?'],['worth it','值得','Is this jacket worth it?']],
+ p:[['What\'s your return policy?','你们的退货政策是什么？'],['I\'d like to return this. It doesn\'t fit.','我想退这个，不合身'],['Could you check if you have it in the back?','能帮我看看仓库里有没有吗？'],['Is it worth it, or should I wait for a sale?','值得买，还是等打折？']],
+ d:[['A','Hi! How can I help you today?'],['Y','I\'d like to return this jacket. It\'s too tight in the shoulders.'],['A','Sure. Do you have your receipt?'],['Y','Yes, here it is. I bought it last week.'],['A','Would you like a refund or an exchange?'],['Y','Could you check if you have it in a larger size first?'],['A','Let me look in the back. Yes, we have one large left.'],['Y','Great, I\'ll exchange it then. Thanks for checking!']]},
+friends:{other:'Maya',talk:'Describe your best friend. How did you become friends?',pat:['Do you want to ___ this weekend?',['come over','go to the movies','ride bikes']],
+ w:[['get along','相处融洽','We get along really well.'],['have in common','有共同点','We have a lot in common.'],['awkward','尴尬的','It felt awkward at first.'],['hilarious','超好笑的','That video was hilarious!'],['count me in','算我一个','A movie on Friday? Count me in!']],
+ p:[['We have so much in common!','我们共同点好多！'],['Sorry, I didn\'t mean to leave you out.','抱歉，我不是故意不带你的'],['Do you want to come over this weekend?','周末想来我家玩吗？'],['That\'s hilarious, I can\'t stop laughing!','太好笑了，停不下来！']],
+ d:[['A','Hey, how was your weekend?'],['Y','Pretty good! I finally finished the book you recommended. It was hilarious.'],['A','Right? The part with the dog cracked me up.'],['Y','Same! We really have a lot in common.'],['A','Totally. Hey, a few of us are going to the movies on Friday.'],['Y','Count me in! What time are you guys meeting?'],['A','Around six, at the mall. My mom can drive us.'],['Y','Awesome. Let me ask my parents, and I\'ll text you tonight.']]},
+library:{other:'Librarian',talk:'Tell me about a book you would recommend and explain why.',pat:['I\'m doing a research project on ___.',['ocean pollution','the solar system','ancient Egypt']],
+ w:[['research','查资料，研究','I need to do research for my report.'],['source','资料来源','Is this website a reliable source?'],['biography','传记','I\'m reading a biography of an astronaut.'],['due date','到期日','The due date is on the receipt.'],['reliable','可靠的','Use reliable websites for your report.']],
+ p:[['Where should I start my research?','我该从哪开始查资料？'],['Is this a reliable source?','这个资料来源可靠吗？'],['Could you recommend something similar?','能推荐类似的书吗？'],['Can I reserve a study room?','我能预约自习室吗？']],
+ d:[['A','Hi! What are you working on today?'],['Y','I\'m doing a research project on ocean pollution. Where should I start?'],['A','The nonfiction section has some great books. Do you need online sources too?'],['Y','Yes, but my teacher said I need reliable sources.'],['A','Try the library database. Sites ending in dot gov or dot edu are usually reliable.'],['Y','That\'s really helpful. Could I also reserve a study room for tomorrow?'],['A','Sure. How long do you need it?'],['Y','About two hours, from three to five, if that works.']]},
+health:{other:'Doctor',talk:'Describe a time you got sick or hurt and how you got better.',pat:['It started ___ and it\'s been getting worse.',['yesterday','this morning','last night']],
+ w:[['symptom','症状','What are your symptoms?'],['prescription','处方','The doctor gave me a prescription.'],['sprain','扭伤','I think I sprained my ankle.'],['recover','康复','How long will it take to recover?'],['contagious','传染的','Is the flu contagious?']],
+ p:[['It started yesterday and it\'s been getting worse.','昨天开始的，越来越严重'],['How long will it take to recover?','多久能好？'],['Is it contagious? Should I stay home?','会传染吗？要在家休息吗？'],['Are there any side effects?','有副作用吗？']],
+ d:[['A','Hi there. What seems to be the problem?'],['Y','I hurt my ankle at basketball practice yesterday, and it\'s been getting worse.'],['A','Can you put any weight on it?'],['Y','A little, but it really hurts when I walk.'],['A','Let me take a look. It looks like a mild sprain.'],['Y','How long will it take to recover?'],['A','About two weeks. Ice it, rest, and keep it raised.'],['Y','Okay. When can I go back to practice?']]},
+help:{other:'Helper',talk:'Explain how to get from your home to your school, step by step.',pat:['Is there a ___ I should look for?',['landmark','sign','building']],
+ w:[['intersection','十字路口','Turn right at the next intersection.'],['landmark','地标','Is there a landmark I can look for?'],['block','街区','It\'s two blocks away.'],['get lost','迷路','I got lost on my way here.'],['shortcut','近路','Is there a shortcut?']],
+ p:[['Could you point me in the right direction?','能给我指个方向吗？'],['Is there a landmark I should look for?','有什么明显的地标吗？'],['How long does it take to walk there?','走过去要多久？'],['Just to make sure I got it...','我确认一下我听对了…']],
+ d:[['A','You look a little lost. Can I help?'],['Y','Yes, please. I\'m trying to get to the community center for a robotics class.'],['A','It\'s not far. Go two blocks down and turn left at the intersection.'],['Y','Is there a landmark I should look for?'],['A','There\'s a big red fire station on the corner. The center is right across from it.'],['Y','Just to make sure I got it: two blocks, left at the fire station, and it\'s across the street?'],['A','Exactly. It takes about five minutes to walk.'],['Y','Thank you so much. I really appreciate it!']]},
+bus:{other:'Driver',talk:'Describe your commute to school and how you could make it better.',pat:['How often does the ___ come?',['bus','train','number 22']],
+ w:[['route','路线','Which route goes downtown?'],['delay','延误','There\'s a delay because of traffic.'],['bus pass','乘车卡','I have a monthly bus pass.'],['commute','通勤','My commute takes twenty minutes.'],['miss','错过','Hurry, or we\'ll miss the bus!']],
+ p:[['Which route should I take to get downtown?','去市中心该坐哪条线？'],['Is this bus running late?','这趟车晚点了吗？'],['Could you let me know when we get to my stop?','到我那站能提醒我吗？'],['I think I missed my stop. What should I do?','我好像坐过站了，怎么办？']],
+ d:[['A','Next stop, Main Street Station.'],['Y','Excuse me, I think I missed my stop. I needed to get off at Pine Avenue.'],['A','No worries. Get off here and take the 22 going the other way.'],['Y','How often does the 22 come?'],['A','Every fifteen minutes, but there might be a short delay because of traffic.'],['Y','Okay. Can I use my bus pass for the transfer?'],['A','Yes, transfers are free within two hours.'],['Y','Great, thank you! I\'ll pay more attention next time.']]},
+party:{other:'Emma',talk:'Plan your dream birthday party and describe it in detail.',pat:['I\'m really looking forward to ___.',['the party','summer break','the field trip']],
+ w:[['host','主办（派对）','Who is hosting the party?'],['theme','主题','The party has a space theme.'],['surprise','惊喜','It\'s a surprise party, so keep it a secret!'],['thoughtful','体贴的','What a thoughtful gift!'],['look forward to','期待','I\'m looking forward to the party.']],
+ p:[['I\'m really looking forward to it!','我很期待！'],['What a thoughtful gift, thank you!','好贴心的礼物，谢谢！'],['Is there anything I can help with?','有什么要帮忙的吗？'],['Thanks for having me. I had a blast!','谢谢招待，我玩得超开心！']],
+ d:[['A','Hey! I\'m so glad you could make it.'],['Y','Thanks for having me! I love the space theme. Did you plan it all?'],['A','My mom and I did. It took all week!'],['Y','It looks amazing. Is there anything I can help with?'],['A','Could you help me hand out the party bags later?'],['Y','Sure! Oh, and this is for you. I hope you like science kits.'],['A','No way, I\'ve wanted this forever! That\'s so thoughtful.'],['Y','I\'m glad you like it. This is the best party I\'ve been to all year!']]},
+phone:{other:'Ben',talk:'Explain how you would politely change plans with a friend.',pat:['Does ___ work for you?',['Sunday afternoon','four o\'clock','next weekend']],
+ w:[['voicemail','语音信箱','I left you a voicemail.'],['text back','回短信','Text me back when you can.'],['reschedule','改时间','Can we reschedule for Sunday?'],['remind','提醒','Can you remind me tomorrow?'],['get back to','回复（某人）','I\'ll get back to you tonight.']],
+ p:[['Something came up. Can we reschedule?','临时有事，能改时间吗？'],['I\'ll get back to you by tonight.','我今晚前回复你'],['Sorry, I missed your call.','抱歉，错过了你的电话'],['Does Sunday afternoon work for you?','周日下午你方便吗？']],
+ d:[['A','Hello?'],['Y','Hi Ben, it\'s {name}. Sorry I missed your call earlier.'],['A','No problem! Are we still on for the science project tomorrow?'],['Y','Actually, something came up. My grandma is visiting. Can we reschedule?'],['A','Sure. Does Sunday afternoon work for you?'],['Y','Sunday works. How about two o\'clock at the library?'],['A','Perfect. Can you bring the poster board?'],['Y','Got it. I\'ll text you tomorrow to remind you. Talk soon!']]},
+sports:{other:'Coach',talk:'Describe a game you played. What happened, and what did you learn?',pat:['What should I work on to improve my ___?',['shooting','passing','speed']],
+ w:[['strategy','战术','We need a better strategy.'],['defense','防守','Our defense was really strong.'],['improve','提高','How can I improve my shooting?'],['sportsmanship','体育精神','Good sportsmanship matters more than winning.'],['give up','放弃','Don\'t give up!']],
+ p:[['We were down by ten, but we came back!','我们落后十分，但追回来了！'],['What should I work on to improve?','我该练什么来提高？'],['Let\'s switch up our strategy.','我们换个战术吧'],['It\'s not about winning, it\'s about having fun.','重要的不是赢，是开心']],
+ d:[['A','Great game today! How do you think the team played?'],['Y','We started slow. We were down by ten at halftime.'],['A','Right, but what changed in the second half?'],['Y','We switched our strategy and played much better defense.'],['A','Exactly. And nobody gave up. I\'m proud of that.'],['Y','Thanks, Coach. What should I work on to improve?'],['A','Your passing is great. Focus on your free throws this week.'],['Y','Got it. I\'ll practice every day after school.']]}
+};
+T.forEach(t=>{t.L3=L3[t.id]});
+const talkQ=()=>lesson().talk||topic().talk[kid().lvl-1];
+const patOf=()=>lesson().pat||ex().pat[kid().lvl-1];
+const LV={1:'入门',2:'基础',3:'进阶'};
 
 /* ---------- 存储 ---------- */
 const KEY='speakup.v1';
-const def={cur:0,kids:[{name:'四年级',en:'Alex',lvl:1,grade:4,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}},{name:'六年级',en:'Sam',lvl:2,grade:6,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}}]};
+const def={cur:0,kids:[{name:'四年级',en:'Alex',lvl:2,grade:4,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}},{name:'六年级',en:'Sam',lvl:3,grade:6,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}}]};
 let S;try{S=JSON.parse(localStorage.getItem(KEY))||def}catch(e){S=def}
+if(!S.lv3){S.kids.forEach((k,i)=>{if(k.lvl<i+2)k.lvl=i+2});S.lv3=1;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const kid=()=>S.kids[S.cur];
 const topic=()=>T[kid().day%T.length];
@@ -371,7 +428,7 @@ let tab='today';
 function renderTop(){
   const ps=document.getElementById('pipSay');
   if(ps&&ps.dataset.k!==String(S.cur)){ps.dataset.k=String(S.cur);ps.textContent=`Hi ${kid().en}! Let's talk!`}
-  document.getElementById('kids').innerHTML=S.kids.map((k,i)=>`<button class="${i===S.cur?'on':''}" data-kid="${i}">${esc(k.name)} · Level ${k.lvl}</button>`).join('');
+  document.getElementById('kids').innerHTML=S.kids.map((k,i)=>`<button class="${i===S.cur?'on':''}" data-kid="${i}">${esc(k.name)} · L${k.lvl} ${LV[k.lvl]}</button>`).join('');
   const k=kid(),n=Object.keys(k.done).length;
   document.getElementById('stats').innerHTML=`<span class="pill">第 ${k.day+1} 天</span><span class="pill">连续 ${k.streak} 天</span><span class="pill">勇气值 ${k.pts}</span><span class="pill">今日 ${n}/5</span>`;
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
@@ -392,7 +449,7 @@ function vToday(){
   <section><h3>今日对话</h3><p class="hint">黄色是你要说的话。↗ 句尾上扬，↘ 句尾下降。</p>
   ${speedBar()}<p class="row"><button class="ghost" id="playDlg">▶ 播放整段对话</button><button class="ghost" id="playDlgSlow">慢速播放</button></p>
   <ul class="list dlg">${L.d.map(([sp,s])=>`<li class="${sp==='Y'?'y':''}"><span><span class="who">${sp==='Y'?'You 你':esc(L.other)}</span>${esc(fill(s))}${tone(s)}</span>${sayBtns(fill(s),sp)}</li>`).join('')}</ul></section>
-  <section><h3>句型替换</h3><div class="note c3"><div class="pat">${esc(ex().pat[k.lvl-1][0]).replace('___','<u>&nbsp;___&nbsp;</u>')}</div><div class="chips" style="flex-wrap:wrap">${patSents().map((s,i)=>`<button data-say="${esc(s)}">▶ ${esc(ex().pat[k.lvl-1][1][i])}</button>`).join('')}</div><p class="hint">点一点听整句，再自己换一个词说一遍。</p></div></section>
+  <section><h3>句型替换</h3><div class="note c3"><div class="pat">${esc(patOf()[0]).replace('___','<u>&nbsp;___&nbsp;</u>')}</div><div class="chips" style="flex-wrap:wrap">${patSents().map((s,i)=>`<button data-say="${esc(s)}">▶ ${esc(patOf()[1][i])}</button>`).join('')}</div><p class="hint">点一点听整句，再自己换一个词说一遍。</p></div></section>
   <section><h3>地道小口语</h3><ul class="list">${ex().sl.map(([e,z])=>`<li><span>${esc(e)}<small>${esc(z)}</small></span>${sayBtns(e)}</li>`).join('')}</ul></section>
   <div class="two"><div class="note c1"><h4>美国生活小知识</h4><p>${esc(ex().cul)}</p></div><div class="note"><h4>发音小贴士 · ${esc(t.tip[0])}</h4><p>${esc(t.tip[1])}</p></div>
   <div class="note c2"><h4>病句纠正</h4><p class="bad">${esc(t.gram[0])}</p><p class="good">${esc(t.gram[1])}</p><p>${esc(t.gram[2])}</p></div></div>
@@ -401,7 +458,7 @@ function vToday(){
 }
 function sheetText(){
   const k=kid(),t=topic(),L=lesson();
-  return `Speak Up 每日学习单 — ${k.name}（Level ${k.lvl}）第 ${k.day+1} 天\n场景：${t.en} ${t.zh}\n\n【5个单词】\n${L.w.map(([w,z,e],i)=>`${i+1}. ${w} — ${z}\n   例句：${e}`).join('\n')}\n\n【关键句】\n${L.p.map(([e,z])=>`• ${e}（${z}）`).join('\n')}\n\n【对话】\n${L.d.map(([s,x])=>`${s==='Y'?'You':L.other}: ${fill(x)}`).join('\n')}\n\n【发音】${t.tip[0]}：${t.tip[1]}\n【病句】✗ ${t.gram[0]}\n        ✓ ${t.gram[1]}（${t.gram[2]}）\n【句型替换】${ex().pat[k.lvl-1][0]} → ${ex().pat[k.lvl-1][1].join(' / ')}\n【地道小口语】${ex().sl.map(s=>s[0]+'（'+s[1]+'）').join('；')}\n【美国生活小知识】${ex().cul}\n【勇敢说30秒】${t.talk[k.lvl-1]}`;
+  return `Speak Up 每日学习单 — ${k.name}（Level ${k.lvl}）第 ${k.day+1} 天\n场景：${t.en} ${t.zh}\n\n【5个单词】\n${L.w.map(([w,z,e],i)=>`${i+1}. ${w} — ${z}\n   例句：${e}`).join('\n')}\n\n【关键句】\n${L.p.map(([e,z])=>`• ${e}（${z}）`).join('\n')}\n\n【对话】\n${L.d.map(([s,x])=>`${s==='Y'?'You':L.other}: ${fill(x)}`).join('\n')}\n\n【发音】${t.tip[0]}：${t.tip[1]}\n【病句】✗ ${t.gram[0]}\n        ✓ ${t.gram[1]}（${t.gram[2]}）\n【句型替换】${patOf()[0]} → ${patOf()[1].join(' / ')}\n【地道小口语】${ex().sl.map(s=>s[0]+'（'+s[1]+'）').join('；')}\n【美国生活小知识】${ex().cul}\n【勇敢说30秒】${talkQ()}`;
 }
 
 /* ---------- 听力 ---------- */
@@ -441,7 +498,7 @@ function vStory(){
 }
 async function makeStory(){
   const k=kid(),L=lesson();ST={loading:true};render();
-  const j=await askAI(`Write a short story for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6) for listening practice. Scene: ${topic().en}. Use all of these words: ${L.w.map(w=>w[0]).join(', ')}. ${k.lvl===1?'5-6 very simple sentences, present tense mostly, max 10 words each.':'7-9 sentences of natural everyday English, max 15 words each.'} Kid-safe and fun. Then write 3 listening comprehension questions with 4 short options each. Return JSON only: {"title":"...","story":"...","questions":[{"q":"...","options":["","","",""],"answer":0}]}`);
+  const j=await askAI(`Write a short story for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6) for listening practice. Scene: ${topic().en}. Use all of these words: ${L.w.map(w=>w[0]).join(', ')}. ${k.lvl===1?'5-6 very simple sentences, present tense mostly, max 10 words each.':k.lvl===2?'7-9 sentences of natural everyday English, max 15 words each.':'10-12 sentences at a native grade level, with past tense, some dialogue, a phrasal verb or idiom, up to 20 words each.'} Kid-safe and fun. Then write 3 listening comprehension questions with 4 short options each. Return JSON only: {"title":"...","story":"...","questions":[{"q":"...","options":["","","",""],"answer":0}]}`);
   ST=j&&j.story&&Array.isArray(j.questions)?{...j,show:false,ans:{}}:null;render();if(ST)say(ST.story);
 }
 
@@ -459,7 +516,7 @@ function vSpeak(){
   ${AI?'<button class="ghost" id="aiSpeak">请 AI 老师点评</button>':''}<div id="aiFb"></div>
   <p class="row" style="justify-content:center"><button class="ghost" id="again">再说一次</button><button class="big" id="nextP">下一个 →</button></p></div>`:''}</section>
   <section><h3>勇敢说 30 秒</h3><div class="practice" style="text-align:left">
-  <p class="row" style="justify-content:space-between"><b style="font-size:22px">${esc(t.talk[k.lvl-1])}</b>${sayBtns(t.talk[k.lvl-1])}</p>
+  <p class="row" style="justify-content:space-between"><b style="font-size:22px">${esc(talkQ())}</b>${sayBtns(talkQ())}</p>
   <p class="hint">不用怕说错！尽量用上今天的单词：${lesson().w.map(w=>esc(w[0])).join('、')}。说得越多勇气值越高。</p>
   <div style="text-align:center">${micBtn().replace('data-mic','data-mic data-brave')}</div>
   <div class="typebox"><input id="brave" value="${esc(BR.said)}" placeholder="说或写几句话…" autocomplete="off"><button class="big" id="braveGo">提交</button></div>
@@ -477,14 +534,14 @@ async function braveSubmit(){
   const n=norm(BR.said).length,k=kid(),t=topic();markDone('brave');addPts(Math.min(5,1+Math.floor(n/8)),'勇敢说完成！勇气值 +'+Math.min(5,1+Math.floor(n/8)));
   if(!AI){BR.fb=`<p>你说了 <b>${n}</b> 个词，真勇敢！明天试着多说一句。</p>`;render();return}
   BR.fb='<p class="hint">AI 老师正在看…</p>';render();
-  const j=await askAI(`You are a warm English coach for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child answered the question "${t.talk[k.lvl-1]}". Their answer came from speech-to-text, so ignore spelling and punctuation:\n"""${BR.said}"""\nReturn JSON only: {"praise":"one short specific English praise","better":"the child's answer rewritten as a natural native speaker their age would say it, keeping their ideas, ${k.lvl===1?'simple words':'everyday words'}","fixes":[{"wrong":"short phrase they said","right":"corrected phrase","zh":"一句中文说明"}] (0-2 most important grammar or word-choice fixes only),"next":"one simple follow-up question to keep them talking"}`);
+  const j=await askAI(`You are a warm English coach for a Chinese-speaking child living in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child answered the question "${talkQ()}". Their answer came from speech-to-text, so ignore spelling and punctuation:\n"""${BR.said}"""\nReturn JSON only: {"praise":"one short specific English praise","better":"the child's answer rewritten as a natural native speaker their age would say it, keeping their ideas, ${k.lvl===1?'simple words':k.lvl===2?'everyday words':'rich, natural grade-level words and idioms'}","fixes":[{"wrong":"short phrase they said","right":"corrected phrase","zh":"一句中文说明"}] (0-2 most important grammar or word-choice fixes only),"next":"one simple follow-up question to keep them talking"}`);
   BR.fb=j?`<p class="good">${esc(j.praise||'')}</p>${(j.fixes||[]).map(f=>`<p><span class="bad">${esc(f.wrong)}</span> → <span class="good">${esc(f.right)}</span> <small>${esc(f.zh)}</small></p>`).join('')}<p><b>母语者会这样说：</b>${esc(j.better||'')} ${j.better?sayBtns(j.better):''}</p><p><b>接着聊：</b>${esc(j.next||'')}</p>`:'';
   render();
 }
 
 /* ---------- 情景对话 ---------- */
 let C={log:[],busy:false,step:0,mode:null};
-function chatReset(){C={log:[],busy:false,step:0,mode:AI?'ai':'script',swap:false,hide:false}}
+function chatReset(){C={log:[],busy:false,step:0,mode:AI?'ai':'script',swap:false,hide:kid().lvl>=3}}
 function vChat(){
   if(!C.mode)chatReset();
   const t=topic(),L=lesson(),k=kid();
@@ -503,8 +560,8 @@ function vChat(){
 }
 function chatPrompt(){
   const k=kid(),t=topic(),L=lesson();
-  return `You are role-playing as ${t.role[k.lvl-1]} in ${t.scene} in the United States, talking with a Chinese-speaking child who lives in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child's name is ${k.en}.
-${k.lvl===1?'Use very simple words and short sentences (max 10 words each).':'Use simple, natural everyday English (sentences up to 15 words).'}
+  return `You are role-playing as ${(t.role[k.lvl-1]||t.role[1])} in ${t.scene} in the United States, talking with a Chinese-speaking child who lives in the U.S. (grade ${k.grade}, English learner level ${k.lvl} of 6). The child's name is ${k.en}.
+${k.lvl===1?'Use very simple words and short sentences (max 10 words each).':k.lvl===2?'Use simple, natural everyday English (sentences up to 15 words).':'Talk like a real native speaker the child\'s age: natural speed, phrasal verbs, idioms, and follow-up questions that ask for reasons and opinions (why/how). Sentences up to 20 words.'}
 Today's words: ${L.w.map(w=>w[0]).join(', ')}. Use them naturally and give the child chances to use them.
 Be warm, patient and encouraging. End every turn with exactly one easy question so the child keeps talking. Stay in character. Keep everything kid-safe.
 Look at the child's LAST message (it came from speech-to-text, so ignore spelling, capitals and punctuation). If it has a real grammar or word-choice mistake, or sounds unnatural, give a fix; otherwise fix is null.
@@ -537,7 +594,7 @@ function vParent(){
   ${S.kids.map((k,i)=>{const avg=k.scores.length?Math.round(k.scores.reduce((a,b)=>a+b,0)/k.scores.length):0;return `<h3>${esc(k.name)} · Level ${k.lvl}</h3>
   <div class="stat"><div><b>${k.day}</b>完成天数</div><div><b>${k.pts}</b>勇气值</div><div><b>${avg||'–'}</b>跟读平均分</div></div>
   <div class="typebox"><input data-name="${i}" value="${esc(k.name)}" aria-label="显示名"><input data-en="${i}" value="${esc(k.en)}" aria-label="英文名"></div>
-  <p class="row" style="margin-top:8px"><button class="ghost" data-lvl="${i}">切换到 Level ${k.lvl===1?2:1}</button><button class="ghost" data-back="${i}">回到上一天</button></p>`}).join('')}
+  <p class="row" style="margin-top:8px"><button class="ghost" data-lvl="${i}">切换到 Level ${k.lvl%3+1}</button><button class="ghost" data-back="${i}">回到上一天</button></p>`}).join('')}
   </section><section><h3>给家长的建议</h3><ol class="tips">${TIPS.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>
   <h3>华人孩子常见的发音难点</h3><ul class="tips"><li>th（think / this）、v/w、r/l、长短元音（ship / sheep）</li><li>词尾辅音被吞掉：dog、cat、checked</li><li>复数 -s、过去式 -ed 忘记加或不读出来</li><li>每个字一样重，没有重音和连读：要模仿 "Can I‿have‿it?" 的连读</li></ul>
   <p class="hint">语音和 AI 功能：在电脑或安卓的 Chrome 中打开，可用麦克风说话、AI 老师和自然语音。iPhone 上可点键盘的麦克风听写来回答。</p></section>`;
@@ -561,7 +618,7 @@ document.addEventListener('click',e=>{
   if(d.opt!=null&&Q.picked==null){Q.picked=+d.opt;const q=Q.qs[Q.i];if(q.opts[Q.picked]===q.ans){Q.right++;addPts(1,'答对了！+1')}else say(q.audio,true);return render()}
   if(d.speed){S.speed=+d.speed;save();render();return say('This is the speed you will hear.')}
   if(d.sq){const[qi,oi]=d.sq.split('-').map(Number);if(ST.ans[qi]==null){ST.ans[qi]=oi;if(oi===ST.questions[qi].answer)addPts(1,'听懂了！+1');if(Object.keys(ST.ans).length===ST.questions.length)markDone('listen');render()}return}
-  if(d.lvl!=null){const k=S.kids[+d.lvl];k.lvl=k.lvl===1?2:1;save();Q=null;return render()}
+  if(d.lvl!=null){const k=S.kids[+d.lvl];k.lvl=k.lvl%3+1;C={log:[],busy:false,step:0,mode:null};P={i:0,res:null,said:''};save();Q=null;return render()}
   if(d.back!=null){const k=S.kids[+d.back];if(k.day>0)k.day--;k.done={};save();return render()}
   const k=kid(),id=b.id;
   if(id==='wordsDone'){markDone('words');addPts(1);return render()}
