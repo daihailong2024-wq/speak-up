@@ -12,97 +12,109 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Speak Up 英语口语</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* VOICE: warm, playful, confident — a coach who cheers every attempt
-   IDEA: a U.S. school-bus pass / classroom card: yellow band, bold ink, stickers for wins
-   PICTURE: the working practice card itself — big target sentence, big mic button
-   COLOUR+TYPE: school-bus yellow dominant, navy ink, coral accent; Baloo 2 titles + Nunito body
-   LAYOUT: one calm column ≤760px, sticky tabs, cards stack on phones */
+/* VOICE: a cheerful cartoon buddy who claps for every try
+   IDEA: a sticker book — thick ink outlines, chunky drop shadows, bright stickers for every scene
+   PICTURE: Pip the headphone chick mascot + a cartoon icon for each life scene; the practice card is the stage
+   COLOUR+TYPE: school-bus yellow, sky, mint, coral, grape on a dotted sky ground; Baloo 2 + Nunito heavy
+   LAYOUT: one column ≤760px, sticky sticker tabs, cards stack on phones */
 :root{color-scheme:light dark;
---bg:light-dark(#ffffff,#101828);--ink:light-dark(#14213d,#eef2ff);--muted:light-dark(#5b6478,#a6b0c8);
---bus:#ffc629;--busink:#14213d;--coral:#ff5a4e;--ok:light-dark(#11865a,#4ade9a);
---card:light-dark(#f5f7fb,#18223a);--line:light-dark(#e2e6ee,#2b3654);--soft:light-dark(#fff6d6,#2b2614)}
+--bg:light-dark(#eef8ff,#0f1a2e);--dots:light-dark(#d3ecff,#1a2945);--ink:light-dark(#1b2440,#f0f4ff);--muted:light-dark(#56607a,#a9b4cf);
+--line:light-dark(#1b2440,#04070f);--card:light-dark(#ffffff,#1b2742);--soft:light-dark(#fff3c4,#3a3217);
+--bus:#ffcf33;--coral:#ff6b5b;--mint:#3ccf91;--sky:#4cb8ff;--grape:#9a7bff;--pink:#ff8fc1;--ok:light-dark(#109a5f,#4ee3a0)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Nunito,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:clip}
-h1,h2,h3{font-family:"Baloo 2",Nunito,"PingFang SC",sans-serif;line-height:1.1;margin:0;text-wrap:balance}
-button{font:inherit;color:inherit;cursor:pointer;border:0;border-radius:14px;min-height:44px;padding:8px 14px;background:var(--card)}
-button:focus-visible,input:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
-input{font:inherit;font-size:16px;min-height:48px;border:2px solid var(--line);border-radius:14px;padding:8px 14px;background:var(--bg);color:var(--ink);width:100%}
-.hero{background:var(--bus);color:var(--busink);padding:18px max(4vw,16px) 14px}
-.brand{display:flex;gap:12px;align-items:center;max-width:760px;margin:auto}
-.brand h1{font-size:clamp(30px,6vw,40px)}.brand p{margin:0;font-weight:700}
+body{margin:0;background:var(--bg) radial-gradient(var(--dots) 2px,transparent 2.6px) 0 0/26px 26px;color:var(--ink);font:600 16px/1.55 Nunito,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3,h4{font-family:"Baloo 2",Nunito,"PingFang SC",sans-serif;line-height:1.1;margin:0;text-wrap:balance}
+button{font:inherit;font-weight:800;color:inherit;cursor:pointer;border:3px solid var(--line);border-radius:16px;min-height:44px;padding:8px 14px;background:var(--card);box-shadow:0 4px 0 var(--line);transition:transform .08s,box-shadow .08s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+button:disabled{opacity:.5}
+button:focus-visible,input:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+input{font:inherit;font-size:16px;min-height:50px;border:3px solid var(--line);border-radius:16px;padding:8px 14px;background:var(--card);color:var(--ink);width:100%}
+.hero{background:var(--bus);color:#1b2440;padding:14px max(4vw,16px) 18px;border-bottom:3px solid #1b2440;border-radius:0 0 30px 30px}
+.brand{display:flex;gap:10px;align-items:center;max-width:760px;margin:auto}
+.mascot{flex:none;width:clamp(78px,20vw,104px);height:auto}
+.mascot.hop{animation:hop .6s}
+@keyframes hop{30%{transform:translateY(-14px) rotate(-6deg)}60%{transform:translateY(0) rotate(4deg)}}
+.brand h1{font-size:clamp(30px,7vw,42px);font-weight:800}
+.bubble{position:relative;background:#fff;color:#1b2440;border:3px solid #1b2440;border-radius:18px;padding:6px 12px;font-weight:800;font-size:15px;margin-top:4px;display:inline-block}
+.bubble::before{content:"";position:absolute;left:-11px;top:12px;border:8px solid transparent;border-right-color:#1b2440}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .kids,.stats{max-width:760px;margin:12px auto 0}
-.kids button{background:#fff8;color:var(--busink);font-weight:800}.kids button.on{background:var(--busink);color:#fff}
-.pill{background:#fff9;color:var(--busink);border-radius:99px;padding:4px 12px;font-weight:800;font-size:14px;white-space:nowrap}
-.tabs{position:sticky;top:0;z-index:5;display:flex;gap:6px;padding:8px max(4vw,12px);background:var(--bg);border-bottom:1px solid var(--line);overflow-x:auto}
-.tabs button{flex:none;font-weight:800;background:none}.tabs button.on{background:var(--busink);color:#fff}
-:root[data-theme=dark] .tabs button.on{background:var(--bus);color:var(--busink)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .tabs button.on{background:var(--bus);color:var(--busink)}}
-main{max-width:760px;margin:auto;padding:18px max(4vw,16px) 80px}
+.kids button{background:#fff;color:#1b2440;border-color:#1b2440;box-shadow:0 4px 0 #1b2440}.kids button.on{background:var(--sky);color:#fff}
+.pill{background:#fff;color:#1b2440;border:2.5px solid #1b2440;border-radius:99px;padding:3px 12px;font-weight:800;font-size:14px;white-space:nowrap}
+.tabs{position:sticky;top:0;z-index:5;display:flex;gap:8px;padding:10px max(4vw,12px) 12px;background:var(--bg);overflow-x:auto}
+.tabs button{flex:none;border-radius:99px;font-size:15px}.tabs button.on{background:var(--coral);color:#fff}
+main{max-width:760px;margin:auto;padding:14px max(4vw,16px) 90px}
 section+section{margin-top:26px}
-h2{font-size:clamp(28px,5vw,36px)}h3{font-size:22px;margin:22px 0 10px}
-.tag{display:inline-block;background:var(--coral);color:#fff;border-radius:99px;padding:2px 12px;font-weight:800;font-size:14px;margin-bottom:6px}
-.sub{color:var(--muted);margin:4px 0 0}
-.plan{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-.plan button{width:100%;text-align:left;display:flex;gap:8px;align-items:center;font-weight:700;font-size:15px}
-.plan .dot{flex:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px}
-.plan .done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
-.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px}
-.wc{background:var(--card);border-radius:18px;padding:14px}
-.wc b{font-family:"Baloo 2";font-size:28px;line-height:1}.wc .zh{color:var(--muted);font-weight:700}
-.wc .ex{margin-top:8px;font-size:15px}
-.say{min-height:36px;min-width:44px;padding:4px 10px;background:var(--bus);color:var(--busink);font-weight:800;border-radius:99px;font-size:14px}
-.say.slow{background:transparent;border:2px solid var(--bus);color:inherit}
-.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.list li{background:var(--card);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+h2{font-size:clamp(28px,6vw,38px)}h3{font-size:23px;margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+h3::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--coral);border:2.5px solid var(--line);flex:none}
+.tag{display:inline-block;background:var(--grape);color:#fff;border:2.5px solid var(--line);border-radius:99px;padding:1px 12px;font-weight:800;font-size:14px;margin-bottom:6px}
+.sub{color:var(--muted);margin:6px 0 0}
+.sheet{background:var(--card);border:3px solid var(--line);border-radius:24px;box-shadow:5px 6px 0 var(--line);padding:16px}
+.tophead{display:flex;gap:14px;align-items:center}.ticon{flex:none;width:clamp(72px,18vw,96px);height:auto}
+.plan{list-style:none;padding:0;margin:14px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.plan button{width:100%;text-align:left;display:flex;gap:8px;align-items:center;font-size:15px}
+.plan .dot{flex:none;width:26px;height:26px;border-radius:50%;border:2.5px solid var(--line);display:grid;place-items:center;font-size:14px;background:var(--bg)}
+.plan .done button{background:color-mix(in srgb,var(--mint) 25%,var(--card))}.plan .done .dot{background:var(--mint);color:#fff}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px}
+.wc{background:var(--card);border:3px solid var(--line);border-radius:22px;box-shadow:4px 5px 0 var(--line);overflow:hidden}
+.wc .top{padding:10px 12px;border-bottom:3px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:6px;color:#1b2440}
+.wc:nth-child(5n+1) .top{background:var(--bus)}.wc:nth-child(5n+2) .top{background:var(--sky)}.wc:nth-child(5n+3) .top{background:var(--mint)}.wc:nth-child(5n+4) .top{background:var(--pink)}.wc:nth-child(5n) .top{background:#c7b6ff}
+.wc b{font-family:"Baloo 2";font-size:28px;line-height:1}.wc .zh{color:var(--muted);font-weight:800;padding:8px 12px 0}
+.wc .ex{padding:4px 12px 12px;font-size:15px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.say{min-height:38px;min-width:44px;padding:3px 10px;background:var(--bus);color:#1b2440;border-radius:99px;font-size:14px;border-width:2.5px;box-shadow:0 3px 0 var(--line)}
+.say.slow{background:var(--card);color:var(--ink)}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.list li{background:var(--card);border:3px solid var(--line);border-radius:18px;padding:10px 12px;display:flex;gap:10px;align-items:center;justify-content:space-between}
 .list li span small{display:block;color:var(--muted)}
 .dlg li.y{background:var(--soft)}.who{font-weight:800;font-size:13px;color:var(--muted);display:block}
 .tone{color:var(--coral);font-weight:800}
-.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:10px;margin-top:18px}
-.note{border:2px solid var(--line);border-radius:18px;padding:14px}.note h4{margin:0 0 6px;font-size:17px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin-top:20px}
+.note{background:var(--card);border:3px solid var(--line);border-radius:22px;padding:14px;box-shadow:4px 5px 0 var(--line)}.note h4{margin:0 0 6px;font-size:19px}
+.note.c1{background:color-mix(in srgb,var(--sky) 18%,var(--card))}.note.c2{background:color-mix(in srgb,var(--pink) 18%,var(--card))}.note.c3{background:color-mix(in srgb,var(--mint) 18%,var(--card))}
 .note p{margin:4px 0}.bad{text-decoration:line-through;color:var(--coral)}.good{color:var(--ok);font-weight:800}
-.big{background:var(--busink);color:#fff;font-weight:800;padding:12px 20px}
-:root[data-theme=dark] .big{background:var(--bus);color:var(--busink)}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .big{background:var(--bus);color:var(--busink)}}
-.ghost{background:none;border:2px solid var(--line);font-weight:700}
-.practice{background:var(--card);border-radius:24px;padding:clamp(16px,4vw,26px);text-align:center}
-.practice .target{font-family:"Baloo 2";font-size:clamp(26px,6vw,40px);line-height:1.15;margin:8px 0}
-.practice .zh{color:var(--muted);font-weight:700}
-.mic{width:84px;height:84px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;font-size:15px;margin:14px auto 8px;display:grid;place-items:center}
-.mic.on{animation:pulse 1s infinite}
-@keyframes pulse{50%{box-shadow:0 0 0 14px #ff5a4e33}}
-@media (prefers-reduced-motion:reduce){.mic.on{animation:none;outline:4px solid var(--bus)}}
-.typebox{display:flex;gap:8px;margin-top:8px}.typebox button{flex:none}
-.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
-.result{margin-top:14px;font-size:20px;line-height:1.6}.result .w{padding:0 2px;border-radius:6px}
+.pat{font-family:"Baloo 2";font-size:24px;line-height:1.2;margin:4px 0 10px}.pat u{text-decoration-color:var(--coral);text-decoration-thickness:3px}
+.big{background:var(--coral);color:#fff;padding:12px 20px}
+.ghost{background:var(--card)}
+.practice{background:var(--card);border:3px solid var(--line);border-radius:28px;box-shadow:5px 6px 0 var(--line);padding:clamp(16px,4vw,26px);text-align:center}
+.practice .target{font-family:"Baloo 2";font-size:clamp(28px,7vw,42px);line-height:1.15;margin:8px 0}
+.practice .zh{color:var(--muted);font-weight:800}
+.mic{width:96px;height:96px;border-radius:50%;background:var(--coral);color:#fff;font-size:15px;margin:16px auto 10px;display:grid;place-items:center;line-height:1.2;box-shadow:0 6px 0 var(--line)}
+.mic.on{background:var(--mint);animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 6px 0 var(--line),0 0 0 16px #3ccf9140}}
+.typebox{display:flex;gap:8px;margin-top:10px}.typebox button{flex:none}
+.hint{font-size:14px;color:var(--muted);margin:8px 0 0}
+.result{margin-top:14px;font-size:21px;line-height:1.7}.result .w{padding:0 3px;border-radius:8px}
 .result .y{color:var(--ok);font-weight:800}.result .n{color:var(--coral);text-decoration:underline wavy}
-.score{font-family:"Baloo 2";font-size:44px;line-height:1}
-.prog{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 14px}.prog i{display:block;height:100%;background:var(--bus)}
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:8px;margin-top:14px}
-.opts button{background:var(--bg);border:2px solid var(--line);font-weight:700;text-align:left}
-.opts .right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}.opts .wrong{border-color:var(--coral)}
+.score{font-family:"Baloo 2";font-size:52px;line-height:1;color:var(--coral)}
+.prog{height:16px;background:var(--bg);border:2.5px solid var(--line);border-radius:99px;overflow:hidden;margin:8px 0 14px}.prog i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--mint) 0 10px,#5be3a8 10px 20px)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px;margin-top:14px}
+.opts button{text-align:left}
+.opts .right{background:color-mix(in srgb,var(--mint) 35%,var(--card))}.opts .wrong{background:color-mix(in srgb,var(--coral) 30%,var(--card))}
 .chat{display:flex;flex-direction:column;gap:10px;margin:14px 0}
-.b{max-width:85%;padding:10px 14px;border-radius:18px;background:var(--card)}
-.b.me{align-self:flex-end;background:var(--bus);color:var(--busink)}
-.fix{align-self:flex-end;max-width:85%;border:2px dashed var(--coral);border-radius:16px;padding:8px 12px;font-size:15px}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}.chips button{flex:none;font-size:14px;min-height:38px;border-radius:99px}
-.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center}
-.stat div{background:var(--card);border-radius:16px;padding:12px}.stat b{font-family:"Baloo 2";font-size:30px;display:block;line-height:1}
+.b{max-width:85%;padding:10px 14px;border-radius:20px 20px 20px 6px;background:var(--card);border:3px solid var(--line)}
+.b.me{align-self:flex-end;background:var(--bus);color:#1b2440;border-radius:20px 20px 6px 20px}
+.fix{align-self:flex-end;max-width:85%;border:3px dashed var(--coral);background:var(--card);border-radius:16px;padding:8px 12px;font-size:15px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px}.chips button{flex:none;font-size:14px;min-height:40px;border-radius:99px}
+.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;text-align:center}
+.stat div{background:var(--card);border:3px solid var(--line);border-radius:18px;padding:12px}.stat b{font-family:"Baloo 2";font-size:32px;display:block;line-height:1;color:var(--coral)}
 .tips li{margin:6px 0}
-#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--busink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:700;opacity:0;transition:.2s;pointer-events:none;z-index:9;max-width:90vw;text-align:center}
-#toast.show{opacity:1}
-textarea{width:100%;min-height:160px;font:14px/1.5 inherit;border-radius:12px;padding:10px;background:var(--bg);color:var(--ink);border:2px solid var(--line)}
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) scale(.8);background:var(--mint);color:#fff;border:3px solid #1b2440;padding:10px 20px;border-radius:99px;font-weight:800;opacity:0;transition:.2s;pointer-events:none;z-index:9;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+.cf{position:fixed;width:12px;height:12px;border-radius:3px;z-index:8;pointer-events:none;animation:cf 1s ease-out forwards}
+@keyframes cf{to{transform:translate(var(--x),var(--y)) rotate(540deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.mic.on,.mascot.hop,.cf{animation:none}.cf{display:none}}
+textarea{width:100%;min-height:160px;font:14px/1.5 inherit;border-radius:14px;padding:10px;background:var(--card);color:var(--ink);border:3px solid var(--line)}
 .hide{display:none!important}
 </style>
 </head>
 <body>
 <header class="hero">
   <div class="brand">
-    <svg width="54" height="48" viewBox="0 0 54 48" aria-hidden="true"><path d="M6 4h42a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6H24l-12 10v-10H6a6 6 0 0 1-6-6V10a6 6 0 0 1 6-6z" fill="#14213d"/><circle cx="16" cy="20" r="3.5" fill="#ffc629"/><circle cx="27" cy="20" r="3.5" fill="#ffc629"/><circle cx="38" cy="20" r="3.5" fill="#ff5a4e"/></svg>
-    <div><h1>Speak Up!</h1><p>每天15分钟 · 敢开口 · 说地道</p></div>
+    <svg class="mascot" id="pip" viewBox="0 0 120 120" aria-label="Pip 小鸡老师"><ellipse cx="60" cy="112" rx="30" ry="5" fill="#1b2440" opacity=".18"/><path d="M48 104l-6 8M72 104l6 8" stroke="#ff8a1f" stroke-width="5" stroke-linecap="round"/><path d="M56 22c-2-10 8-14 10-6 4-8 14-2 8 6" fill="#ffcf33" stroke="#1b2440" stroke-width="4" stroke-linejoin="round"/><circle cx="60" cy="64" r="42" fill="#ffe066" stroke="#1b2440" stroke-width="4"/><ellipse cx="60" cy="80" rx="24" ry="18" fill="#fff4b8"/><path d="M18 60a42 42 0 0 1 84 0" fill="none" stroke="#1b2440" stroke-width="7"/><rect x="10" y="54" width="16" height="24" rx="7" fill="#4cb8ff" stroke="#1b2440" stroke-width="4"/><rect x="94" y="54" width="16" height="24" rx="7" fill="#4cb8ff" stroke="#1b2440" stroke-width="4"/><circle cx="46" cy="58" r="7" fill="#1b2440"/><circle cx="74" cy="58" r="7" fill="#1b2440"/><circle cx="48.5" cy="55.5" r="2.4" fill="#fff"/><circle cx="76.5" cy="55.5" r="2.4" fill="#fff"/><ellipse cx="37" cy="72" rx="6" ry="4" fill="#ff8fc1"/><ellipse cx="83" cy="72" rx="6" ry="4" fill="#ff8fc1"/><path d="M52 68q8 10 16 0z" fill="#ff8a1f" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/></svg>
+    <div><h1>Speak Up!</h1><div class="bubble" id="pipSay">Hi! Let's talk!</div></div>
   </div>
   <div class="kids row" id="kids"></div>
   <div class="stats row" id="stats"></div>
@@ -239,6 +251,39 @@ const T=[
 ];
 const TIPS=['听力提速：先用「正常」语速听懂，再切到「母语快」，坚持一周耳朵就能跟上同学说话的速度。','影子跟读：播放一句，马上跟着说，模仿语调和连读——这是最快提高口语流利度的方法。','每天固定时间 15–20 分钟，比周末一次学2小时更有效。','先夸再改：每次只纠正 1–2 个最重要的错误，敢说比说对更重要。','家里设"英语时间"：晚饭时全家说 5 分钟英语，用当天的 5 个词。','让孩子当小老师，把今天的单词和对话教给爸妈——教别人是最好的复习。','睡前听 10 分钟英文有声书或动画（英文字幕），培养语感和语调。','鼓励孩子在学校每天主动用一句新学的话，回家分享"今天我说了什么"。','跟读时模仿语调和停顿，而不只是单词，这是接近母语者的关键。','升级标准：跟读平均 80 分以上、情景对话能连续聊 6 轮不需要提示，就可以试 Level 2。'];
 
+/* ---------- 加料：美国生活小知识、地道口语、句型替换 ---------- */
+const E={
+school:{cul:'美国课堂上想去洗手间，要先举手问老师，拿 hall pass（通行证）才能出教室。',sl:[['Awesome!','太棒了！'],['No worries.','没关系']],pat:[['Can I borrow a ___?',['pencil','eraser','ruler']],['Could you explain ___ again?',['the homework','the last step','the rules']]]},
+market:{cul:'结账时收银员常问 "Did you find everything okay?"，回答 "Yes, thanks!" 就好。很多人自带购物袋。',sl:[['Grab a cart.','推个购物车'],['That\'s a good deal!','真划算！']],pat:[['Where is the ___?',['milk','bread','fruit']],['Is the ___ on sale?',['cereal','orange juice','ice cream']]]},
+food:{cul:'美国坐下点餐的餐厅一般给服务员 15%–20% 小费；快餐店自己点餐取餐，不用给。',sl:[['I\'m starving!','我饿坏了！'],['It\'s so good!','太好吃了！']],pat:[['Can I have some ___, please?',['water','juice','ketchup']],['Does this have ___ in it?',['nuts','milk','eggs']]]},
+mall:{cul:'美国大部分商店可以退换货，记得留好 receipt（收据），退货期限看各家店的规定。',sl:[['Just looking.','随便看看'],['That looks cool on you!','你穿这个好酷！']],pat:[['Can I try on these ___?',['shoes','pants','jeans']],['Do you have this in ___?',['blue','a medium','a bigger size']]]},
+friends:{cul:'美国孩子打招呼常说 "Hey!" "What\'s up?"，回答 "Not much!" 就很自然，不用说 "I\'m fine, thank you."',sl:[['What\'s up?','最近怎样？（打招呼）'],['Not much.','没啥（回答 What\'s up）']],pat:[['Do you want to play ___?',['tag','soccer','hide and seek']],['Want to ___ after school?',['hang out','play basketball','go to the park']]]},
+library:{cul:'美国公共图书馆借书免费，办卡通常只要地址证明，还有很多免费的故事会和暑期阅读活动。',sl:[['It\'s a page-turner!','这本书好看到停不下来！'],['I can\'t put it down.','我放不下这本书']],pat:[['Where are the ___ books?',['animal','dinosaur','space']],['Do you have any books about ___?',['volcanoes','the ocean','robots']]]},
+health:{cul:'在学校不舒服要告诉老师，去 nurse\'s office（医务室）。遇到紧急情况拨打 911。',sl:[['I feel under the weather.','我有点不舒服'],['I\'m feeling better.','我好些了']],pat:[['My ___ hurts.',['head','tummy','knee']],['I\'ve had a ___ since yesterday.',['headache','sore throat','fever']]]},
+help:{cul:'走丢了别乱跑，找穿制服的工作人员或带孩子的家长求助。一定要背熟爸妈的电话号码。',sl:[['I\'m lost.','我迷路了'],['Could you give me a hand?','能帮我一下吗？']],pat:[['Where is the ___?',['bathroom','exit','front desk']],['Could you tell me how to get to the ___?',['gym','library','cafeteria']]]},
+bus:{cul:'校车停下、亮红灯并伸出 STOP 牌时，路上所有车都必须停下，等孩子安全上下车。',sl:[['Scoot over.','往里挪挪'],['Save me a seat!','给我留个座！']],pat:[['This is my ___.',['stop','seat','bus']],['Does this bus go to the ___?',['mall','library','beach']]]},
+party:{cul:'收到生日 invitation（邀请卡）要回复 RSVP。礼物不用贵，送对方喜欢的小东西加一张卡片就很好。',sl:[['You made it!','你来啦！'],['Best party ever!','史上最棒的派对！']],pat:[['This ___ is for you.',['gift','card','drawing']],['Thanks for ___!',['inviting me','the cake','having me']]]},
+phone:{cul:'打电话找人说 "Can I speak to…?"；对方说 "Hold on" 就是让你稍等，不要挂电话。',sl:[['Hold on a sec.','稍等一下'],['Gotta go!','我得挂了！']],pat:[['Can I speak to ___, please?',['Ben','Mia','Mr. Lee']],['I\'m calling to ask about ___.',['the homework','the party','Saturday']]]},
+sports:{cul:'美国学校很重视 team spirit（团队精神）。比赛结束不管输赢，都要和对方击掌说 "Good game!"',sl:[['Good game!','打得好！（赛后）'],['Let\'s go!','加油！冲！']],pat:[['I like to play ___.',['soccer','basketball','baseball']],['I\'m not very good at ___ yet.',['shooting','dribbling','running fast']]]}
+};
+const ICON={
+school:'<circle cx="32" cy="32" r="30" fill="#ffcf33"/><circle cx="32" cy="36" r="15" fill="#ff6b5b" stroke="#1b2440" stroke-width="3"/><path d="M32 22v-6" stroke="#1b2440" stroke-width="3" stroke-linecap="round"/><path d="M33 18c4-6 10-5 11-3-4 4-8 4-11 3z" fill="#3ccf91" stroke="#1b2440" stroke-width="2.5"/>',
+market:'<circle cx="32" cy="32" r="30" fill="#4cb8ff"/><path d="M12 18h7l5 20h20l4-14H21" fill="#fff" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/><circle cx="27" cy="45" r="4" fill="#1b2440"/><circle cx="41" cy="45" r="4" fill="#1b2440"/><circle cx="34" cy="26" r="4" fill="#ff6b5b"/>',
+food:'<circle cx="32" cy="32" r="30" fill="#3ccf91"/><path d="M16 30a16 12 0 0 1 32 0z" fill="#ffb84d" stroke="#1b2440" stroke-width="3"/><rect x="14" y="31" width="36" height="6" rx="3" fill="#7a3e1d" stroke="#1b2440" stroke-width="3"/><path d="M16 40h32a3 3 0 0 1-3 6H19a3 3 0 0 1-3-6z" fill="#ffb84d" stroke="#1b2440" stroke-width="3"/>',
+mall:'<circle cx="32" cy="32" r="30" fill="#ff8fc1"/><path d="M18 24h28l-3 24H21z" fill="#fff" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/><path d="M25 26v-5a7 7 0 0 1 14 0v5" fill="none" stroke="#1b2440" stroke-width="3"/><path d="M27 36h10" stroke="#ff6b5b" stroke-width="3" stroke-linecap="round"/>',
+friends:'<circle cx="32" cy="32" r="30" fill="#9a7bff"/><circle cx="23" cy="32" r="10" fill="#ffe066" stroke="#1b2440" stroke-width="3"/><circle cx="41" cy="32" r="10" fill="#ffcf9e" stroke="#1b2440" stroke-width="3"/><path d="M19 34q4 4 8 0M37 34q4 4 8 0" fill="none" stroke="#1b2440" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="29" r="1.6" fill="#1b2440"/><circle cx="26" cy="29" r="1.6" fill="#1b2440"/><circle cx="38" cy="29" r="1.6" fill="#1b2440"/><circle cx="44" cy="29" r="1.6" fill="#1b2440"/>',
+library:'<circle cx="32" cy="32" r="30" fill="#ffcf33"/><path d="M12 20q10-4 20 2q10-6 20-2v24q-10-4-20 2q-10-6-20-2z" fill="#fff" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/><path d="M32 22v24" stroke="#1b2440" stroke-width="3"/><path d="M17 27h10M17 33h10M37 27h10" stroke="#4cb8ff" stroke-width="2.5" stroke-linecap="round"/>',
+health:'<circle cx="32" cy="32" r="30" fill="#4cb8ff"/><rect x="14" y="18" width="36" height="28" rx="7" fill="#fff" stroke="#1b2440" stroke-width="3"/><path d="M32 24v16M24 32h16" stroke="#ff6b5b" stroke-width="6" stroke-linecap="round"/>',
+help:'<circle cx="32" cy="32" r="30" fill="#3ccf91"/><path d="M32 14v36" stroke="#1b2440" stroke-width="4" stroke-linecap="round"/><path d="M33 18h14l5 5-5 5H33z" fill="#ffcf33" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/><path d="M31 30H17l-5 5 5 5h14z" fill="#ff8fc1" stroke="#1b2440" stroke-width="3" stroke-linejoin="round"/>',
+bus:'<circle cx="32" cy="32" r="30" fill="#4cb8ff"/><rect x="11" y="20" width="42" height="22" rx="6" fill="#ffcf33" stroke="#1b2440" stroke-width="3"/><rect x="16" y="24" width="8" height="7" rx="2" fill="#fff" stroke="#1b2440" stroke-width="2"/><rect x="28" y="24" width="8" height="7" rx="2" fill="#fff" stroke="#1b2440" stroke-width="2"/><rect x="40" y="24" width="8" height="7" rx="2" fill="#fff" stroke="#1b2440" stroke-width="2"/><circle cx="21" cy="43" r="4.5" fill="#1b2440"/><circle cx="43" cy="43" r="4.5" fill="#1b2440"/>',
+party:'<circle cx="32" cy="32" r="30" fill="#9a7bff"/><rect x="16" y="30" width="32" height="16" rx="4" fill="#ff8fc1" stroke="#1b2440" stroke-width="3"/><path d="M16 36q4 4 8 0t8 0 8 0 8 0" fill="none" stroke="#fff" stroke-width="3"/><rect x="30" y="20" width="4" height="10" fill="#fff" stroke="#1b2440" stroke-width="2"/><path d="M32 12q4 4 0 7q-4-3 0-7z" fill="#ffcf33" stroke="#1b2440" stroke-width="2"/>',
+phone:'<circle cx="32" cy="32" r="30" fill="#ff8fc1"/><rect x="21" y="12" width="22" height="40" rx="6" fill="#fff" stroke="#1b2440" stroke-width="3"/><rect x="25" y="18" width="14" height="24" rx="2" fill="#4cb8ff"/><circle cx="32" cy="47" r="2.5" fill="#1b2440"/>',
+sports:'<circle cx="32" cy="32" r="30" fill="#ffcf33"/><circle cx="32" cy="32" r="17" fill="#fff" stroke="#1b2440" stroke-width="3"/><path d="M32 25l7 5-3 8h-8l-3-8z" fill="#1b2440"/><path d="M32 15v10M39 30l9-3M36 38l5 8M28 38l-5 8M25 30l-9-3" stroke="#1b2440" stroke-width="2.5"/>'
+};
+const icon=(id,cls='ticon')=>`<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true"><g>${ICON[id]||''}</g><circle cx="32" cy="32" r="30" fill="none" stroke="#1b2440" stroke-width="3"/></svg>`;
+const ex=()=>E[topic().id];
+const patSents=()=>{const[pt,subs]=ex().pat[kid().lvl-1];return subs.map(s=>pt.replace('___',s))};
+
 /* ---------- 存储 ---------- */
 const KEY='speakup.v1';
 const def={cur:0,kids:[{name:'四年级',en:'Alex',lvl:1,grade:4,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}},{name:'六年级',en:'Sam',lvl:2,grade:6,day:0,pts:0,streak:0,last:'',done:{},scores:[],custom:{}}]};
@@ -253,7 +298,15 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const today=()=>new Date().toLocaleDateString('en-CA');
 function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200)}
-function addPts(n,msg){kid().pts+=n;save();renderTop();toast(msg||('勇气值 +'+n))}
+const CHEERS=['Great job!','You did it!','Super!','Way to go!','Awesome!','Keep going!','I\'m proud of you!'];
+function cheer(big){
+  const p=document.getElementById('pip'),s=document.getElementById('pipSay');
+  if(s)s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  if(p){p.classList.remove('hop');void p.offsetWidth;p.classList.add('hop')}
+  const cols=['#ffcf33','#4cb8ff','#3ccf91','#ff6b5b','#9a7bff','#ff8fc1'];
+  for(let i=0;i<(big?28:12);i++){const c=document.createElement('i');c.className='cf';c.style.left=(innerWidth/2)+'px';c.style.top=(innerHeight-70)+'px';c.style.background=cols[i%6];c.style.setProperty('--x',(Math.random()*2-1)*innerWidth*0.45+'px');c.style.setProperty('--y',-(150+Math.random()*innerHeight*0.5)+'px');document.body.appendChild(c);setTimeout(()=>c.remove(),1100)}
+}
+function addPts(n,msg){kid().pts+=n;save();renderTop();toast(msg||('勇气值 +'+n));cheer(n>=2)}
 function markDone(step){const k=kid();if(!k.done[step]){k.done[step]=1;save();renderTop()}}
 
 /* ---------- 语音 ---------- */
@@ -316,6 +369,8 @@ const sayBtns=(t,who)=>`<span class="row" style="flex:none;gap:4px"><button clas
 /* ---------- 顶部 ---------- */
 let tab='today';
 function renderTop(){
+  const ps=document.getElementById('pipSay');
+  if(ps&&ps.dataset.k!==String(S.cur)){ps.dataset.k=String(S.cur);ps.textContent=`Hi ${kid().en}! Let's talk!`}
   document.getElementById('kids').innerHTML=S.kids.map((k,i)=>`<button class="${i===S.cur?'on':''}" data-kid="${i}">${esc(k.name)} · Level ${k.lvl}</button>`).join('');
   const k=kid(),n=Object.keys(k.done).length;
   document.getElementById('stats').innerHTML=`<span class="pill">第 ${k.day+1} 天</span><span class="pill">连续 ${k.streak} 天</span><span class="pill">勇气值 ${k.pts}</span><span class="pill">今日 ${n}/5</span>`;
@@ -326,25 +381,27 @@ const STEPS=[['words','学5个单词','today'],['listen','听力小测','listen'
 /* ---------- 今日学习单 ---------- */
 function vToday(){
   const k=kid(),t=topic(),L=lesson(),round=Math.floor(k.day/T.length);
-  return `<section><span class="tag">Day ${k.day+1}${round?` · 第${round+1}轮`:''}</span><h2>${esc(t.en)} · ${t.zh}</h2>
-  <p class="sub">今天的任务：按顺序完成，约 15–20 分钟。每一次开口都算勇气值！</p>
+  return `<section class="sheet"><div class="tophead">${icon(t.id)}<div><span class="tag">Day ${k.day+1}${round?` · 第${round+1}轮`:''}</span><h2>${esc(t.en)}</h2><b>${t.zh}</b></div></div>
+  <p class="sub">今天的任务：按顺序完成，约 15–20 分钟。每一次开口都能拿勇气值！</p>
   <ul class="plan">${STEPS.map(([id,zh,go])=>`<li class="${k.done[id]?'done':''}"><button data-go="${go}"><span class="dot">${k.done[id]?'✓':''}</span>${zh}</button></li>`).join('')}</ul></section>
   <section><h3>今日 5 个单词</h3>
   ${round&&AI&&!k.custom[k.day]?'<p class="hint">这个场景学过一轮了。<button class="ghost" id="newWords">让 AI 换 5 个新词</button></p>':''}
-  <div class="words">${L.w.map(([w,zh,ex])=>`<div class="wc"><div class="row" style="justify-content:space-between"><b>${esc(w)}</b>${sayBtns(w)}</div><div class="zh">${esc(zh)}</div><div class="ex row" style="justify-content:space-between"><span>${esc(ex)}</span>${sayBtns(ex)}</div></div>`).join('')}</div>
+  <div class="words">${L.w.map(([w,zh,eg])=>`<div class="wc"><div class="top"><b>${esc(w)}</b>${sayBtns(w)}</div><div class="zh">${esc(zh)}</div><div class="ex"><span>${esc(eg)}</span>${sayBtns(eg)}</div></div>`).join('')}</div>
   <p style="margin-top:12px"><button class="big" id="wordsDone">${k.done.words?'已学完 ✓':'这5个词我都会读了'}</button></p></section>
   <section><h3>关键句</h3><ul class="list">${L.p.map(([e,z])=>`<li><span>${esc(e)}${tone(e)}<small>${esc(z)}</small></span>${sayBtns(e)}</li>`).join('')}</ul></section>
   <section><h3>今日对话</h3><p class="hint">黄色是你要说的话。↗ 句尾上扬，↘ 句尾下降。</p>
   ${speedBar()}<p class="row"><button class="ghost" id="playDlg">▶ 播放整段对话</button><button class="ghost" id="playDlgSlow">慢速播放</button></p>
   <ul class="list dlg">${L.d.map(([sp,s])=>`<li class="${sp==='Y'?'y':''}"><span><span class="who">${sp==='Y'?'You 你':esc(L.other)}</span>${esc(fill(s))}${tone(s)}</span>${sayBtns(fill(s),sp)}</li>`).join('')}</ul></section>
-  <div class="two"><div class="note"><h4>发音小贴士 · ${esc(t.tip[0])}</h4><p>${esc(t.tip[1])}</p></div>
-  <div class="note"><h4>病句纠正</h4><p class="bad">${esc(t.gram[0])}</p><p class="good">${esc(t.gram[1])}</p><p>${esc(t.gram[2])}</p></div></div>
+  <section><h3>句型替换</h3><div class="note c3"><div class="pat">${esc(ex().pat[k.lvl-1][0]).replace('___','<u>&nbsp;___&nbsp;</u>')}</div><div class="chips" style="flex-wrap:wrap">${patSents().map((s,i)=>`<button data-say="${esc(s)}">▶ ${esc(ex().pat[k.lvl-1][1][i])}</button>`).join('')}</div><p class="hint">点一点听整句，再自己换一个词说一遍。</p></div></section>
+  <section><h3>地道小口语</h3><ul class="list">${ex().sl.map(([e,z])=>`<li><span>${esc(e)}<small>${esc(z)}</small></span>${sayBtns(e)}</li>`).join('')}</ul></section>
+  <div class="two"><div class="note c1"><h4>美国生活小知识</h4><p>${esc(ex().cul)}</p></div><div class="note"><h4>发音小贴士 · ${esc(t.tip[0])}</h4><p>${esc(t.tip[1])}</p></div>
+  <div class="note c2"><h4>病句纠正</h4><p class="bad">${esc(t.gram[0])}</p><p class="good">${esc(t.gram[1])}</p><p>${esc(t.gram[2])}</p></div></div>
   <section class="row"><button class="ghost" id="copySheet">复制今日学习单</button><button class="big" id="finishDay">完成今天，明天学新内容 →</button></section>
   <textarea id="sheetBox" class="hide" readonly></textarea>`;
 }
 function sheetText(){
   const k=kid(),t=topic(),L=lesson();
-  return `Speak Up 每日学习单 — ${k.name}（Level ${k.lvl}）第 ${k.day+1} 天\n场景：${t.en} ${t.zh}\n\n【5个单词】\n${L.w.map(([w,z,e],i)=>`${i+1}. ${w} — ${z}\n   例句：${e}`).join('\n')}\n\n【关键句】\n${L.p.map(([e,z])=>`• ${e}（${z}）`).join('\n')}\n\n【对话】\n${L.d.map(([s,x])=>`${s==='Y'?'You':L.other}: ${fill(x)}`).join('\n')}\n\n【发音】${t.tip[0]}：${t.tip[1]}\n【病句】✗ ${t.gram[0]}\n        ✓ ${t.gram[1]}（${t.gram[2]}）\n【勇敢说30秒】${t.talk[k.lvl-1]}`;
+  return `Speak Up 每日学习单 — ${k.name}（Level ${k.lvl}）第 ${k.day+1} 天\n场景：${t.en} ${t.zh}\n\n【5个单词】\n${L.w.map(([w,z,e],i)=>`${i+1}. ${w} — ${z}\n   例句：${e}`).join('\n')}\n\n【关键句】\n${L.p.map(([e,z])=>`• ${e}（${z}）`).join('\n')}\n\n【对话】\n${L.d.map(([s,x])=>`${s==='Y'?'You':L.other}: ${fill(x)}`).join('\n')}\n\n【发音】${t.tip[0]}：${t.tip[1]}\n【病句】✗ ${t.gram[0]}\n        ✓ ${t.gram[1]}（${t.gram[2]}）\n【句型替换】${ex().pat[k.lvl-1][0]} → ${ex().pat[k.lvl-1][1].join(' / ')}\n【地道小口语】${ex().sl.map(s=>s[0]+'（'+s[1]+'）').join('；')}\n【美国生活小知识】${ex().cul}\n【勇敢说30秒】${t.talk[k.lvl-1]}`;
 }
 
 /* ---------- 听力 ---------- */
@@ -355,6 +412,7 @@ function buildQuiz(){
   const sents=[...L.w.map(x=>x[2]),...L.p.map(x=>x[0]),...L.d.map(x=>fill(x[1]))];
   shuffle(sents).slice(0,3).forEach(s=>qs.push({audio:s,ans:s,opts:shuffle([s,...shuffle(sents.filter(x=>x!==s)).slice(0,3)]),kind:'听句子，选你听到的'}));
   shuffle(L.p).slice(0,2).forEach(p=>qs.push({audio:p[0],ans:p[0],dict:true,kind:'听写：听到什么就写什么'}));
+  {const s=ex().sl[Math.floor(Math.random()*2)],pz=Object.values(E).flatMap(x=>x.sl.map(y=>y[1])).filter(z=>z!==s[1]);qs.push({audio:s[0],ans:s[1],opts:shuffle([s[1],...shuffle(pz).slice(0,3)]),kind:'地道口语：听一听，选意思'})}
   prevWords(2).forEach(w=>qs.push({audio:w[0],ans:w[1],opts:shuffle([w[1],...shuffle(pool.filter(x=>x[1]!==w[1])).slice(0,3).map(x=>x[1])]),kind:'复习旧词：听单词，选意思'}));
   Q={qs,i:0,right:0,picked:null,res:null};
 }
@@ -389,7 +447,7 @@ async function makeStory(){
 
 /* ---------- 跟读 + 勇敢说 ---------- */
 let P={i:0,res:null,said:''},BR={said:'',fb:null};
-function items(){const L=lesson();if(!P.rev)P.rev=prevWords(3);return[...P.rev.map(w=>[w[0],'复习：'+w[1]]),...L.w.map(w=>[w[0],w[1]]),...L.w.map(w=>[w[2],w[0]+' 的例句']),...L.p,...L.d.map(d=>[fill(d[1]),d[0]==='Y'?'对话：你说的话':'对话：'+L.other+' 说的话（影子跟读）'])]}
+function items(){const L=lesson();if(!P.rev)P.rev=prevWords(3);return[...P.rev.map(w=>[w[0],'复习：'+w[1]]),...L.w.map(w=>[w[0],w[1]]),...L.w.map(w=>[w[2],w[0]+' 的例句']),...L.p,...patSents().map(s=>[s,'句型替换']),...ex().sl,...L.d.map(d=>[fill(d[1]),d[0]==='Y'?'对话：你说的话':'对话：'+L.other+' 说的话（影子跟读）'])]}
 function vSpeak(){
   const it=items(),cur=it[P.i%it.length],t=topic(),k=kid(),r=P.res;
   return `<section class="practice"><span class="tag">跟读 ${P.i%it.length+1}/${it.length}</span><div class="prog"><i style="width:${(P.i%it.length)/it.length*100}%"></i></div>
@@ -431,7 +489,7 @@ function vChat(){
   if(!C.mode)chatReset();
   const t=topic(),L=lesson(),k=kid();
   const mine=C.swap?'A':'Y',nextY=C.mode==='script'?L.d.slice(C.step).find(d=>d[0]===mine):null;
-  return `<section><span class="tag">${C.mode==='ai'?'AI 角色扮演':'跟着剧本练'}</span><h2>${esc(t.en)}</h2>
+  return `<section><div class="tophead">${icon(t.id)}<div><span class="tag">${C.mode==='ai'?'AI 角色扮演':'跟着剧本练'}</span><h2>${esc(t.en)}</h2></div></div>
   <p class="sub">你在${t.zh}，${C.swap&&C.mode==='script'?`这次你来演 ${esc(L.other)}。`:`和 ${esc(L.other)} 聊天。`}${C.mode==='ai'?'说错了没关系，AI 会温柔地告诉你更地道的说法。':''}</p>
   <p class="row">${AI?`<button class="ghost" id="modeAI" ${C.mode==='ai'?'disabled':''}>自由聊（AI）</button><button class="ghost" id="modeScript" ${C.mode==='script'?'disabled':''}>跟着剧本练</button>`:''}${C.mode==='script'?`<button class="ghost" id="swapRole">${C.swap?'换回我自己的角色':'角色互换'}</button><button class="ghost" id="hideHint">${C.hide?'显示提示':'隐藏提示（挑战）'}</button>`:''}</p>
   <div class="chat" id="chatLog">${C.log.map(m=>m.r==='me'?`<div class="b me">${esc(m.t)}</div>${m.fix?`<div class="fix">更地道：<b>${esc(m.fix.better)}</b> ${sayBtns(m.fix.better)}<br><small>${esc(m.fix.zh||'')}</small></div>`:''}${m.praise?`<div class="fix" style="border-style:solid;border-color:var(--ok)">${esc(m.praise)}</div>`:''}`:`<div class="b"><span class="row" style="justify-content:space-between;gap:6px"><span>${esc(m.t)}</span>${sayBtns(m.t)}</span></div>`).join('')}
@@ -509,7 +567,7 @@ document.addEventListener('click',e=>{
   if(id==='wordsDone'){markDone('words');addPts(1);return render()}
   if(id==='playDlg'||id==='playDlgSlow')return sayLines(lesson().d,id==='playDlgSlow');
   if(id==='copySheet'){const txt=sheetText();navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>toast('学习单已复制，可粘贴到备忘录或发给孩子')).catch(()=>{const box=document.getElementById('sheetBox');box.value=txt;box.classList.remove('hide');box.select()});if(!navigator.clipboard){const box=document.getElementById('sheetBox');box.value=txt;box.classList.remove('hide')}return}
-  if(id==='finishDay'){const n=Object.keys(k.done).length;const y=new Date(Date.now()-864e5).toLocaleDateString('en-CA');if(k.last!==today())k.streak=k.last===y?k.streak+1:1;k.last=today();k.day++;k.done={};save();Q=null;P={i:0,res:null,said:''};BR={said:'',fb:null};C={log:[],busy:false,step:0,mode:null};ST=null;toast(n>=5?'全部完成！明天见 Great job!':'明天继续加油！');return render()}
+  if(id==='finishDay'){const n=Object.keys(k.done).length;const y=new Date(Date.now()-864e5).toLocaleDateString('en-CA');if(k.last!==today())k.streak=k.last===y?k.streak+1:1;k.last=today();k.day++;k.done={};save();Q=null;P={i:0,res:null,said:''};BR={said:'',fb:null};C={log:[],busy:false,step:0,mode:null};ST=null;toast(n>=5?'全部完成！明天见 Great job!':'明天继续加油！');cheer(true);return render()}
   if(id==='newWords'){(async()=>{toast('AI 正在挑新词…');const t=topic(),used=T.flatMap(x=>x['L'+k.lvl].w.map(w=>w[0]));const j=await askAI(`Pick 5 useful everyday English words or short phrases a Chinese-speaking grade ${k.grade} child in the U.S. (English learner level ${k.lvl} of 6) needs for the scene "${t.en}". Avoid: ${used.join(', ')}. Return JSON only: [{"w":"word","zh":"中文意思","ex":"a short natural example sentence"}]`);if(Array.isArray(j)&&j.length){k.custom[k.day]=j.slice(0,5).map(x=>[x.w,x.zh,x.ex]);save();render()}})();return}
   if(id==='mkStory')return makeStory();
   if(id==='showStory'){ST.show=!ST.show;return render()}
